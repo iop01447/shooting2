@@ -38,6 +38,16 @@ public:
 
 		return pObj;
 	}
+
+	static CObj* Create(const D3DXVECTOR3& _vPos, const D3DXVECTOR3& _vDir)
+	{
+		CObj* pObj = new T;
+		pObj->Set_Pos(_vPos.x, _vPos.y);
+		pObj->Initialize();
+		pObj->Set_Dir(_vDir);
+
+		return pObj;
+	}
 };
 
 #endif // !__AbstractFactory_H__

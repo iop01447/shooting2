@@ -18,8 +18,28 @@ public:
 	virtual void Move() override;
 	virtual void Attack() override;
 
+public:
+	int wrap(int x, int low, int high);
+
+private:
+	void Update_Matrix();
+	void Change_Pattern();
+	void Pattern00();
+	void Pattern01();
+
 private:
 	D3DXVECTOR3 m_vPoint[4]; // Q
 	D3DXVECTOR3 m_vOrigin[4];// P
+
+	D3DXVECTOR3 m_vLookOrigin;
+
+	DWORD		m_dwLastAttTime;
+	DWORD		m_dwAttDelay;
+
+	DWORD		m_dwLastPatternChangeTime;
+	DWORD		m_dwPatternTime;
+
+	int			m_iPattern{ 1 };
+	int			m_iMaxPattern{ 2 };
 };
 
