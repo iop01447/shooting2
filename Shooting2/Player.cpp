@@ -22,14 +22,19 @@ void CPlayer::Initialize()
 	m_tInfo.vDir = { 1.f, -1.f, 0.f };
 	m_tInfo.vLook = { 1.f, 0.f, 0.f }; 
 
-	//원점 기준 좌상단 좌표 
-	m_vOrigin[0] = { -m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
-	//원점 기준 우상단 좌표. 
-	m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
-	//원점 기준 우 하단. 
-	m_vOrigin[2] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
-	// 원점 기준 좌 하단. 
-	m_vOrigin[3] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+	////원점 기준 좌상단 좌표 
+	//m_vOrigin[0] = { -m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
+	////원점 기준 우상단 좌표. 
+	//m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
+	////원점 기준 우 하단. 
+	//m_vOrigin[2] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+	//// 원점 기준 좌 하단. 
+	//m_vOrigin[3] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+
+	m_vOrigin[0] = { -30.f, 20.f, 0.f };
+	m_vOrigin[1] = { 0.f, -10.f, 0.f };
+	m_vOrigin[2] = { 30.f, 20.f, 0.f };
+	m_vOrigin[3] = { 0.f,10.f, 0.f };
 
 	m_fAngle = 0.f; 
 	m_fSpeed = 5.f; 
@@ -99,3 +104,4 @@ void CPlayer::KeyCheck()
 void CPlayer::Boundary_Check()
 {
 }
+
