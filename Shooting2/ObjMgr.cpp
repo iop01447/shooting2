@@ -35,7 +35,7 @@ void CObjMgr::Update()
 		auto& iter = m_listObj[i].begin();
 		for (; iter != m_listObj[i].end(); )
 		{
-			int iEvent = (*iter)->Update();
+ 			int iEvent = (*iter)->Update();
 			if (m_listObj[i].empty())
 				break;
 			if (OBJ_DEAD == iEvent)

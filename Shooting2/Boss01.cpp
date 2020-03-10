@@ -6,7 +6,6 @@ CBoss01::CBoss01()
 {
 }
 
-
 CBoss01::~CBoss01()
 {
 }
