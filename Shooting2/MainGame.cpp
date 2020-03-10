@@ -34,6 +34,7 @@ void CMainGame::Initialize()
 
 void CMainGame::Update()
 {
+	CKeyMgr::Get_Instance()->Key_Update();
 	CObjMgr::Get_Instance()->Update();
 }
 
