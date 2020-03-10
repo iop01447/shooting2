@@ -35,9 +35,6 @@ private:
 	D3DXVECTOR3 m_vOrigin[4]; // P
 	D3DXVECTOR3 m_vPosin;
 
-	float		m_fAngle; 
-	float		m_fSpeed; 
-
 	DWORD		m_dwLastAttTime;
 	DWORD		m_dwAttDelay;
 };

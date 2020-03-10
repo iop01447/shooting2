@@ -156,6 +156,7 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="Boss00.h" />
     <ClInclude Include="Boss01.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -180,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="BmpMgr.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Boss00.cpp" />
     <ClCompile Include="Boss01.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
