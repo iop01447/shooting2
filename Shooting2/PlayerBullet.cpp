@@ -18,6 +18,7 @@ void CPlayerBullet::Initialize()
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
 	m_fSpeed = 5.f;
+	m_tStatus.iPower = 5;
 
 	Update_Rect();
 }

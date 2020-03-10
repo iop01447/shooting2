@@ -27,6 +27,8 @@ protected:
 
 	virtual void Move(){}
 	virtual void Attack(){}
+
+	void Die_Effect();
 };
 
 

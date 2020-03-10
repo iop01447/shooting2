@@ -13,11 +13,11 @@ CEffect::~CEffect()
 
 void CEffect::Initialize()
 {
-	m_tInfo.vSize.x = 5.f;
-	m_tInfo.vSize.y = 5.f;
-	m_fSpeed = (float)(rand() % 10) / 10.f + 1.f;
+	float r = rand() % 5 + 3.f;
+	m_tInfo.vSize = { r, r, 0.f };
+	m_fSpeed = (float)(rand() % 10) / 10.f + 1.3f;
 
-	m_dwDeadTime = 1000;
+	m_dwDeadTime = 1500;
 	m_dwDeltaTime = GetTickCount();
 
 	Update_Rect();
@@ -40,6 +40,9 @@ void CEffect::Late_Update()
 {
 	if (0 > m_tRect.top || 0 > m_tRect.left
 		|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
+		m_bDead = true;
+
+	if (m_dwDeltaTime + m_dwDeadTime < GetTickCount())
 		m_bDead = true;
 }
 
