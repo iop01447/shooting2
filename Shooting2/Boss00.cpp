@@ -37,6 +37,9 @@ void CBoss00::Initialize()
 
 int CBoss00::Update()
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	Move();
 
 	D3DXMATRIX matScale, matRotZ, matTrance;
