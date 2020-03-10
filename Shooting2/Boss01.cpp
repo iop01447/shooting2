@@ -36,6 +36,8 @@ int CBoss01::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
+	m_fAngle = float(((int)m_fAngle + 5) % 360);
+
 	D3DXMATRIX matScale, matRotZ, matTrance;
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
@@ -44,6 +46,8 @@ int CBoss01::Update()
 
 	for (int i = 0; i < 4; ++i)
 		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
+
 
 	Update_Rect();
 
