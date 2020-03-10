@@ -25,8 +25,8 @@ protected:
 		return pObj;
 	}
 
-	virtual void Move() = 0;
-	virtual void Attack() = 0;
+	virtual void Move(){}
+	virtual void Attack(){}
 };
 
 

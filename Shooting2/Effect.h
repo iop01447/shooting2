@@ -1,12 +1,21 @@
 #pragma once
+
+#ifndef __EFFECT_H__
+#define __EFFECT_H__
+
 #include "Obj.h"
-class CBullet :
+class CEffect :
 	public CObj
 {
-public:
-	CBullet();
-	virtual ~CBullet();
+private:
+	DWORD		m_dwDeltaTime;
+	DWORD		m_dwDeadTime;
 
+public:
+	CEffect();
+	virtual ~CEffect();
+
+public:
 	// CObj을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual int Update() override;
@@ -15,3 +24,4 @@ public:
 	virtual void Release() override;
 };
 
+#endif // !__EFFECT_H__

@@ -164,6 +164,8 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="DelayBullet.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="Function.h" />
@@ -192,6 +194,8 @@
     <ClCompile Include="Boss02Bullet.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="DelayBullet.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MyBitmap.cpp" />
