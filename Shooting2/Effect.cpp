@@ -13,12 +13,15 @@ CEffect::~CEffect()
 
 void CEffect::Initialize()
 {
-	m_tInfo.vSize.x = 5.f;
-	m_tInfo.vSize.y = 5.f;
-	m_fSpeed = (float)(rand() % 10) / 10.f + 1.f;
+	float r = rand() % 5 + 3.f;
+	m_tInfo.vSize = { r, r, 0.f };
+	m_fSpeed = (float)(rand() % 10) / 10.f + 1.3f;
 
-	m_dwDeadTime = 1000;
+	m_dwDeadTime = 1500;
 	m_dwDeltaTime = GetTickCount();
+
+	m_iRand = rand() % 2;
+	m_iColor = rand() % 4;
 
 	Update_Rect();
 }
@@ -41,14 +44,45 @@ void CEffect::Late_Update()
 	if (0 > m_tRect.top || 0 > m_tRect.left
 		|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
 		m_bDead = true;
+
+	if (m_dwDeltaTime + m_dwDeadTime < GetTickCount())
+		m_bDead = true;
 }
 
 void CEffect::Render(HDC hDC)
 {
-	if (0 == rand() % 2)
+	HPEN Brush = nullptr;
+	HPEN oldBrush = nullptr;
+
+	switch (m_iColor)
+	{
+	case 0:
+		Brush = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+		oldBrush = (HPEN)SelectObject(hDC, Brush);
+		break;
+	case 1:
+		Brush = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
+		oldBrush = (HPEN)SelectObject(hDC, Brush);
+		break;
+	case 2:
+		Brush = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+		oldBrush = (HPEN)SelectObject(hDC, Brush);
+		break;
+	case 3:
+		Brush = CreatePen(PS_SOLID, 2, RGB(255, 0, 255));
+		oldBrush = (HPEN)SelectObject(hDC, Brush);
+		break;
+	default:
+		break;
+	}
+
+	if (0 == m_iRand)
 		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	else
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	SelectObject(hDC, oldBrush);
+	DeleteObject(Brush);
 }
 
 void CEffect::Release()

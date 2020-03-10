@@ -19,5 +19,6 @@ void CPlayerBullet::Initialize()
 
 	m_fSpeed = 5.f;
 	m_tStatus.iPower = 5;
+
 	Update_Rect();
 }

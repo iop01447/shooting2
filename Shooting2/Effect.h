@@ -10,6 +10,8 @@ class CEffect :
 private:
 	DWORD		m_dwDeltaTime;
 	DWORD		m_dwDeadTime;
+	int			m_iRand;
+	int			m_iColor;
 
 public:
 	CEffect();

@@ -53,7 +53,11 @@ void CBoss00::Initialize()
 int CBoss00::Update()
 {
 	if (m_bDead)
+	{
+		for (int i = 0; i < 50; ++i)
+			Die_Effect();
 		return OBJ_DEAD;
+	}
 
 	Move();
 
