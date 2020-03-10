@@ -4,6 +4,7 @@
 #include "ObjMgr.h"
 #include "KeyMgr.h"
 #include "Bullet.h"
+#include "PlayerBullet.h"
 
 
 CPlayer::CPlayer()
@@ -82,6 +83,7 @@ void CPlayer::Release()
 
 void CPlayer::KeyCheck()
 {
+	m_fAngle = 0.f;
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
 	{
 		m_tInfo.vPos.y -= m_fSpeed;
@@ -107,7 +109,7 @@ void CPlayer::KeyCheck()
 	{
 		if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBullet>(m_vPosin.x, m_vPosin.y));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CPlayerBullet>(m_vPosin.x, m_vPosin.y));
 			m_dwLastAttTime = GetTickCount();
 		}
 	}
