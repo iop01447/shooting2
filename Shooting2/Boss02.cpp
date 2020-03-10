@@ -18,21 +18,74 @@ void CBoss02::Initialize()
 	m_tInfo.vDir = { 1.f, -1.f, 0.f };
 	m_tInfo.vLook = { 1.f, 0.f, 0.f };
 
-	//¿øÁ¡ ±âÁØ ÁÂ»ó´Ü ÁÂÇ¥ 
-	m_vOrigin[0] = { -m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
-	//¿øÁ¡ ±âÁØ ¿ì»ó´Ü ÁÂÇ¥. 
-	m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
-	//¿øÁ¡ ±âÁØ ¿ì ÇÏ´Ü. 
-	m_vOrigin[2] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
-	// ¿øÁ¡ ±âÁØ ÁÂ ÇÏ´Ü. 
-	m_vOrigin[3] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+	//À­Á¡
+	m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
+	//¿ìÇÏ´Ü
+	m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+	//ÁÂÇÏ´Ü
+	m_vOrigin[2] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+
+	m_vOrigin[3] = {};
+	m_vOrigin[4] = {};
+	m_vOrigin[5] = {};
+
 
 	m_fAngle = 0.f;
 	m_fSpeed = 5.f;
+
+	m_tStatus.iHp = 1000;
 }
 
 int CBoss02::Update()
 {
+
+	if (600 <= m_tStatus.iHp)
+	{
+		//Áß¾Ó»ó´Ü
+		m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
+		//¿ìÇÏ´Ü
+		m_vOrigin[1] = { +m_tInfo.vSize.x * 0.5f, +m_tInfo.vSize.y * 0.5f, 0.f };
+		//ÁÂÇÏ´Ü
+		m_vOrigin[2] = { -m_tInfo.vSize.x * 0.5f, +m_tInfo.vSize.y * 0.5f, 0.f };
+	}
+	// »ç°¢
+	else if (400 <= m_tStatus.iHp)
+	{
+		//ÁÂ»ó´Ü
+		m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
+		//¿ì»ó´Ü
+		m_vOrigin[1] = { +m_tInfo.vSize.x * 0.5f, -m_tInfo.vSize.y * 0.5f, 0.f };
+		//¿ìÇÏ´Ü
+		m_vOrigin[2] = { +m_tInfo.vSize.x * 0.5f, +m_tInfo.vSize.y * 0.5f, 0.f };
+		//ÁÂÇÏ´Ü
+		m_vOrigin[3] = { -m_tInfo.vSize.x * 0.5f, +m_tInfo.vSize.y * 0.5f, 0.f };
+	}
+	// ¿À°¢
+	else if (200 <= m_tStatus.iHp)
+	{
+		//Áß¾Ó»ó´Ü
+		m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
+		//¿ìÁß´Ü
+		m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+		//¿ìÇÏ´Ü
+		m_vOrigin[2] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+		//ÁÂÇÏ´Ü
+		m_vOrigin[3] = {};
+		//ÁÂÁß´Ü
+		m_vOrigin[4] = {};
+	}
+
+	// À°°¢
+	else if (0 <= m_tStatus.iHp)
+	{
+		m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
+		//¿ìÇÏ´Ü
+		m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+		//ÁÂÇÏ´Ü
+		m_vOrigin[2] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+		m_vOrigin[4] = {};
+		m_vOrigin[5] = {};
+	}
 	D3DXMATRIX matScale, matRotZ, matTrance;
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
@@ -52,7 +105,50 @@ void CBoss02::Late_Update()
 
 void CBoss02::Render(HDC hDC)
 {
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	// ¿ø
+	if (800 <= m_tStatus.iHp)
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	// »ï°¢
+	else if (600 <= m_tStatus.iHp)
+	{
+		MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
+		for (int i = 1; i < 3; ++i)
+		{
+			LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
+		}
+		LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+	}
+	// »ç°¢
+	else if (400 <= m_tStatus.iHp)
+	{
+		MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
+		for (int i = 1; i < 4; ++i)
+		{
+			LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
+		}
+		LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+	}
+	// ¿À°¢
+	else if (200 <= m_tStatus.iHp)
+	{
+		MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
+		for (int i = 1; i < 5; ++i)
+		{
+			LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
+		}
+		LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+	}
+
+	// À°°¢
+	else if (0 <= m_tStatus.iHp)
+	{
+		MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
+		for (int i = 1; i < 6; ++i)
+		{
+			LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
+		}
+		LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+	}
 	//MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
 
 	//HPEN Brush, oldBrush;
