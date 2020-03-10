@@ -7,6 +7,9 @@
 class CBoss00 :
 	public CBoss
 {
+private:
+	enum STATE { IDLE, START, ATTACK, ATTACK1, ATTACK2, ATTACK3, END };
+
 public:
 	CBoss00();
 	virtual ~CBoss00();
@@ -24,13 +27,24 @@ public:
 	virtual void Attack() override;
 
 private:
-	D3DXVECTOR3 m_vPoint[4]; // Q
-	D3DXVECTOR3 m_vOrigin[4]; // P
-	D3DXVECTOR3 m_vPosin;
-	D3DXVECTOR3 m_vOriginPosin;
+	void Attack1();
+	void Attack2();
+	void Attack3();
 
-	DWORD		m_dwLastAttTime;
-	DWORD		m_dwAttDelay;
+	void BackStartPos();
+
+private:
+	STATE			m_eState;
+
+	D3DXVECTOR3		m_vStart;
+	D3DXVECTOR3		m_vPoint[4]; // Q
+	D3DXVECTOR3		m_vOrigin[4]; // P
+	D3DXVECTOR3		m_vPosin[3];
+	D3DXVECTOR3		m_vOriginPosin[3];
+
+	DWORD			m_dwLastAttTime;
+	DWORD			m_dwAttDelay;
+	DWORD			m_dwAttTime;
 };
 
 #endif // !__BOSS00_H__
