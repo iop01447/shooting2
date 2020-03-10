@@ -17,7 +17,7 @@ public:
 	virtual void Render(HDC hDC) override = 0;
 	virtual void Release() override = 0;
 
-private:
+protected:
 	//RECT m_tRect; 
 	D3DXVECTOR3 m_vPoint[4]; // Q
 	D3DXVECTOR3 m_vOrigin[4]; // P

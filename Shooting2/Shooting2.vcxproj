@@ -157,6 +157,7 @@
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss01.h" />
+    <ClInclude Include="Boss02.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Define.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="BmpMgr.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss01.cpp" />
+    <ClCompile Include="Boss02.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />

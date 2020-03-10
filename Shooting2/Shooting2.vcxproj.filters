@@ -138,6 +138,9 @@
     <ClInclude Include="Boss01.h">
       <Filter>소스 파일\01.Obj\01.Boss\01.Boss01</Filter>
     </ClInclude>
+    <ClInclude Include="Boss02.h">
+      <Filter>소스 파일\01.Obj\01.Boss\02.Boss02</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerBullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
     </ClInclude>
@@ -181,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="Boss01.cpp">
       <Filter>소스 파일\01.Obj\01.Boss\01.Boss01</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss02.cpp">
+      <Filter>소스 파일\01.Obj\01.Boss\02.Boss02</Filter>
     </ClCompile>
     <ClCompile Include="PlayerBullet.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
