@@ -13,30 +13,16 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Collision_Rect(list<CObj*>& _Dst, list<CObj*>& _Src)
 {
+	RECT rc = {};
+
 	for (auto& Dst : _Dst)
 	{
 		for (auto& Src : _Src)
 		{
-			float	fX = 0.f, fY = 0.f;
-
-			if (Check_Rect(Dst, Src, &fX, &fY))
+			if (IntersectRect(&rc, &(Dst->Get_Rect()), &(Src->Get_Rect())))
 			{
-				if (fX > fY)	// »óÇÏ
-				{
-					Dst->Set_Dead();
-					Src->Set_Dead();
-				//	if (Dst->Get_Info().vPos.x < Src->Get_Info().vPos.y)
-				//		Src->Set_PosY(fY);
-				//	else
-				//		Src->Set_PosY(-fY);
-				//}
-				//else			// ÁÂ¿ì
-				//{
-				//	if (Dst->Get_Info().fX < Src->Get_Info().fX)
-				//		Src->Set_PosX(fX);
-				//	else
-				//		Src->Set_PosX(-fX);
-				}
+				Dst->Set_Damage(Src->Get_Power());
+				Src->Set_Dead();
 			}
 		}
 	}

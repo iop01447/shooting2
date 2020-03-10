@@ -30,4 +30,6 @@
 
 using namespace std;
 
+#include <time.h>
+
 #include "Include.h"

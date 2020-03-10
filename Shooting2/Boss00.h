@@ -8,7 +8,8 @@ class CBoss00 :
 	public CBoss
 {
 private:
-	enum STATE { IDLE, START, ATTACK, ATTACK1, ATTACK2, ATTACK3, END };
+	enum STATE { IDLE, START, ATTACK, ATTACK1, ATTACK2, ATTACK3, STATE_END };
+	enum DIR { LEFT, RIGHT, DIR_END };
 
 public:
 	CBoss00();
@@ -35,6 +36,7 @@ private:
 
 private:
 	STATE			m_eState;
+	DIR				m_eDir;
 
 	D3DXVECTOR3		m_vStart;
 	D3DXVECTOR3		m_vPoint[4]; // Q
@@ -45,6 +47,10 @@ private:
 	DWORD			m_dwLastAttTime;
 	DWORD			m_dwAttDelay;
 	DWORD			m_dwAttTime;
+
+	int				m_iCount;
+
+	list<CObj*>*	m_listBullet;
 };
 
 #endif // !__BOSS00_H__

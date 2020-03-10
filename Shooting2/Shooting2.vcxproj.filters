@@ -73,6 +73,12 @@
     <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet">
       <UniqueIdentifier>{e9543454-b2ea-4c68-ae5d-4afbd13adfcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1">
+      <UniqueIdentifier>{5e977e2a-cf46-4b89-9174-806b0ea073eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\03.Effect">
+      <UniqueIdentifier>{82f1e0d6-5e73-4e0c-b1fc-9e9806b2a963}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -157,7 +163,10 @@
       <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
     </ClInclude>
     <ClInclude Include="Boss00Bullet1.h">
-      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>소스 파일\01.Obj\03.Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,7 +219,10 @@
       <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
     </ClCompile>
     <ClCompile Include="Boss00Bullet1.cpp">
-      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>소스 파일\01.Obj\03.Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
