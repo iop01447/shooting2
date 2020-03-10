@@ -71,15 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,12 +153,38 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="BmpMgr.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="Define.h" />
+    <ClInclude Include="Enum.h" />
+    <ClInclude Include="Extern.h" />
+    <ClInclude Include="Function.h" />
+    <ClInclude Include="Functor.h" />
+    <ClInclude Include="Include.h" />
+    <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MyBitmap.h" />
+    <ClInclude Include="Obj.h" />
+    <ClInclude Include="ObjMgr.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shooting2.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BmpMgr.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MyBitmap.cpp" />
+    <ClCompile Include="Obj.cpp" />
+    <ClCompile Include="ObjMgr.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shooting2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

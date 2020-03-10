@@ -13,6 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\00.MainGame">
+      <UniqueIdentifier>{95dddeed-93dd-4ee8-b476-98f7563660a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj">
+      <UniqueIdentifier>{91504dc3-91e2-47d1-9f1d-f922a1998212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Headers">
+      <UniqueIdentifier>{b4f145c2-9448-497a-9504-63602f62852b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99.Default">
+      <UniqueIdentifier>{41d11e91-2f80-4414-8761-23b8646e3b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\97.Manager">
+      <UniqueIdentifier>{cd5c189a-7b95-4f2c-92e5-848d64f5e6c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Player">
+      <UniqueIdentifier>{023ef924-ede2-4e57-8686-148a9cc41a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\01.Boss">
+      <UniqueIdentifier>{5af94af2-a3e3-4cdd-8c22-2aedbd586e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\97.Manager\00.ObjMgr">
+      <UniqueIdentifier>{57f12a2b-528e-48f7-8b5d-1c0231b752ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\97.Manager\01.KeyMgr">
+      <UniqueIdentifier>{76f4d0be-9d11-407d-a78e-dbfb3dc68244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\97.Manager\02.CollisionMgr">
+      <UniqueIdentifier>{fd8a7fe8-3fc0-477f-bc8e-f548d813a6e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\97.Manager\03.BmpMgr">
+      <UniqueIdentifier>{853470cc-b9ce-4417-8e25-31f26576a1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.MyBitMap">
+      <UniqueIdentifier>{69903aa8-7a60-4b9f-93c7-fd56b7abc45e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -22,21 +58,99 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\99.Default</Filter>
     </ClInclude>
     <ClInclude Include="Shooting2.h">
+      <Filter>소스 파일\99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>소스 파일\99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>소스 파일\01.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\01.Obj\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>소스 파일\01.Obj\01.Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>소스 파일\97.Manager\00.ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>소스 파일\97.Manager\01.KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>소스 파일\97.Manager\02.CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpMgr.h">
+      <Filter>소스 파일\97.Manager\03.BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Extern.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Functor.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>소스 파일\98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBitmap.h">
+      <Filter>소스 파일\02.MyBitMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Shooting2.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일\99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>소스 파일\01.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\01.Obj\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일\01.Obj\01.Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>소스 파일\97.Manager\00.ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>소스 파일\97.Manager\01.KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>소스 파일\97.Manager\02.CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpMgr.cpp">
+      <Filter>소스 파일\97.Manager\03.BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBitmap.cpp">
+      <Filter>소스 파일\02.MyBitMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
