@@ -28,7 +28,7 @@ void CPlayer::Initialize()
 	m_vOrigin[0] = { -3.f, 2.f, 0.f };
 	m_vOrigin[1] = { 0.f, -1.f, 0.f };
 	m_vOrigin[2] = { 3.f, 2.f, 0.f };
-	m_vOrigin[3] = { 0.f,1.f, 0.f };
+	m_vOrigin[3] = { 0.f, 1.f, 0.f };
 	for (int i = 0; i < 4; ++i) {
 		m_vOrigin[i].x *= m_tInfo.vSize.x;
 		m_vOrigin[i].y *= m_tInfo.vSize.y;
@@ -75,6 +75,9 @@ void CPlayer::Render(HDC hDC)
 
 	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
 
+#ifdef _DEBUG
+	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+#endif
 }
 
 void CPlayer::Release()

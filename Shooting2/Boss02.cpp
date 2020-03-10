@@ -33,7 +33,7 @@ void CBoss02::Initialize()
 	m_fAngle = 0.f;
 	m_fSpeed = 5.f;
 
-	m_tStatus.iHp = 1000;
+	m_tStatus.iHp = 500;
 }
 
 int CBoss02::Update()
@@ -54,7 +54,7 @@ int CBoss02::Update()
 	else if (400 <= m_tStatus.iHp)
 	{
 		//좌상단
-		m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
+		m_vOrigin[0] = { -m_tInfo.vSize.x* 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
 		//우상단
 		m_vOrigin[1] = { +m_tInfo.vSize.x * 0.5f, -m_tInfo.vSize.y * 0.5f, 0.f };
 		//우하단
@@ -63,18 +63,19 @@ int CBoss02::Update()
 		m_vOrigin[3] = { -m_tInfo.vSize.x * 0.5f, +m_tInfo.vSize.y * 0.5f, 0.f };
 	}
 	// 오각
+	
 	else if (200 <= m_tStatus.iHp)
 	{
 		//중앙상단
 		m_vOrigin[0] = { -m_tInfo.vSize.x,-m_tInfo.vSize.y * 0.5f, 0.f };
 		//우중단
-		m_vOrigin[1] = { m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+		m_vOrigin[1] = { m_tInfo.vSize.x * cosf(D3DXToRadian(36.f)), -m_tInfo.vSize.y * sinf(D3DXToRadian(36.f)), 0.f };
 		//우하단
-		m_vOrigin[2] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
+		m_vOrigin[2] = { -m_tInfo.vSize.x * cosf(D3DXToRadian(72.f)), m_tInfo.vSize.y * sinf(D3DXToRadian(72.f)), 0.f };
 		//좌하단
-		m_vOrigin[3] = {};
+		m_vOrigin[3] = { +m_tInfo.vSize.x * cosf(D3DXToRadian(72.f)), m_tInfo.vSize.y * sinf(D3DXToRadian(72.f)), 0.f };
 		//좌중단
-		m_vOrigin[4] = {};
+		m_vOrigin[4] = { -m_tInfo.vSize.x * cosf(D3DXToRadian(36.f)), -m_tInfo.vSize.y * sinf(D3DXToRadian(36.f)), 0.f };
 	}
 
 	// 육각

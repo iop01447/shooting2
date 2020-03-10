@@ -12,7 +12,6 @@
 #include "Boss02.h"
 
 
-
 CMainGame::CMainGame()
 {
 }

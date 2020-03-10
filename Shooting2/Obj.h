@@ -36,6 +36,7 @@ public:
 	void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
 	void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
 	void Set_Size(int _iCX, int _iCY) { m_tInfo.vSize = { float(_iCX), float(_iCY), 0.f };}
+	void Set_Dir(const D3DXVECTOR3& _vDir) { m_tInfo.vDir = _vDir; }
 
 
 protected:
