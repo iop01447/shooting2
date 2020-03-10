@@ -64,6 +64,15 @@
     <Filter Include="소스 파일\01.Obj\01.Boss\02.Boss02">
       <UniqueIdentifier>{313bccf7-5e7f-4465-a689-1dc01e6c815b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet">
+      <UniqueIdentifier>{1a3a2b99-45a6-4049-b2ec-c486b01920ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\02.Boss01Bullet">
+      <UniqueIdentifier>{a90784fe-2199-4886-93a7-887ccba8da09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet">
+      <UniqueIdentifier>{e9543454-b2ea-4c68-ae5d-4afbd13adfcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -138,14 +147,17 @@
     <ClInclude Include="Boss01.h">
       <Filter>소스 파일\01.Obj\01.Boss\01.Boss01</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBullet.h">
-      <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
+    <ClInclude Include="Boss00.h">
+      <Filter>소스 파일\01.Obj\01.Boss\00.Boss00</Filter>
     </ClInclude>
     <ClInclude Include="Boss02.h">
       <Filter>소스 파일\01.Obj\01.Boss\02.Boss02</Filter>
     </ClInclude>
-    <ClInclude Include="Boss00.h">
-      <Filter>소스 파일\01.Obj\01.Boss\00.Boss00</Filter>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss00Bullet1.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -188,14 +200,17 @@
     <ClCompile Include="Boss01.cpp">
       <Filter>소스 파일\01.Obj\01.Boss\01.Boss01</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerBullet.cpp">
-      <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
+    <ClCompile Include="Boss00.cpp">
+      <Filter>소스 파일\01.Obj\01.Boss\00.Boss00</Filter>
     </ClCompile>
     <ClCompile Include="Boss02.cpp">
       <Filter>소스 파일\01.Obj\01.Boss\02.Boss02</Filter>
     </ClCompile>
-    <ClCompile Include="Boss00.cpp">
-      <Filter>소스 파일\01.Obj\01.Boss\00.Boss00</Filter>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss00Bullet1.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
