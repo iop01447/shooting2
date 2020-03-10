@@ -3,6 +3,7 @@
 
 #include "ObjMgr.h"
 #include "KeyMgr.h"
+#include "Bullet.h"
 
 
 CPlayer::CPlayer()
@@ -21,6 +22,7 @@ void CPlayer::Initialize()
 	m_tInfo.vSize = { 100.f, 100.f, 0.f };
 	m_tInfo.vDir = { 1.f, -1.f, 0.f };
 	m_tInfo.vLook = { 1.f, 0.f, 0.f }; 
+	m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2), 0.f };
 
 	//¿øÁ¡ ±âÁØ ÁÂ»ó´Ü ÁÂÇ¥ 
 	m_vOrigin[0] = { -m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
@@ -90,6 +92,13 @@ void CPlayer::KeyCheck()
 	{
 		m_tInfo.vPos.y += m_fSpeed;
 	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBullet>(m_vPosin.x, m_vPosin.y));
+	}
+
+
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_ESCAPE))
 	{
 		DestroyWindow(g_hWnd);

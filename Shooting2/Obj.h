@@ -16,6 +16,9 @@ public:
 	virtual void Render(HDC hDC) = 0;
 	virtual void Release() = 0;
 
+protected:
+	void Update_Rect();
+
 public:
 	const INFO& Get_Info() const { return m_tInfo; }
 	const bool& Get_Dead() const { return m_bDead; }
@@ -35,6 +38,7 @@ public:
 
 protected:
 	INFO		m_tInfo;		// 객체들의 좌표와 크기를 저장한다.
+	RECT		m_tRect;
 
 	STATUS		m_tStatus;
 	CObj*		m_pTarget;

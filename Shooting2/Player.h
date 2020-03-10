@@ -23,8 +23,17 @@ public:
 	void Boundary_Check();
 
 private:
+	template <typename T>
+	CObj* Create_Bullet(float _x, float _y, float _fAngle = 0.f)
+	{
+		CObj* pObj = CAbstractFactory<T>::Create(_x, _y, _fAngle);
+		return pObj;
+	}
+
+private:
 	D3DXVECTOR3 m_vPoint[4]; // Q
 	D3DXVECTOR3 m_vOrigin[4]; // P
+	D3DXVECTOR3 m_vPosin;
 
 	float m_fAngle; 
 	float m_fSpeed; 
