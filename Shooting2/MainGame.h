@@ -3,7 +3,7 @@
 #ifndef __MAINGAME_H__
 #define __MAINGAME_H__
 
-class CPlayer; 
+class CObj; 
 class CMainGame
 {
 public:
@@ -18,7 +18,11 @@ public:
 	void Release(); 
 
 private:
+	void KeyCheck();
+
+private:
 	HDC m_hDC; 
+	CObj* m_pBoss;
 };
 
 

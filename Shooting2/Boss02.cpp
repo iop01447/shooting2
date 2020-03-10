@@ -38,6 +38,8 @@ void CBoss02::Initialize()
 
 int CBoss02::Update()
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 
 	if (600 <= m_tStatus.iHp)
 	{

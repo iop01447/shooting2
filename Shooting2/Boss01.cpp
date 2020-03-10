@@ -33,6 +33,9 @@ void CBoss01::Initialize()
 
 int CBoss01::Update()
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	D3DXMATRIX matScale, matRotZ, matTrance;
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));

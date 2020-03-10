@@ -12,6 +12,7 @@
 #include "Boss02.h"
 
 
+
 CMainGame::CMainGame()
 {
 }
@@ -29,13 +30,14 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 
 	CObjMgr::Get_Instance()->Add_Object(OBJID::PLAYER, CAbstractFactory<CPlayer>::Create(300.f, 700.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss02>::Create());
-	//CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss01>::Create());
 
+	m_pBoss = CAbstractFactory<CBoss00>::Create();
+	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
 }
 
 void CMainGame::Update()
 {
+	KeyCheck();
 	CObjMgr::Get_Instance()->Update();
 	CKeyMgr::Get_Instance()->Key_Update();
 }
@@ -68,4 +70,23 @@ void CMainGame::Release()
 	CObjMgr::Destroy_Instance();
 
 	ReleaseDC(g_hWnd, m_hDC); 
+}
+
+void CMainGame::KeyCheck()
+{
+	if (CKeyMgr::Get_Instance()->Key_Down('1')) {
+		m_pBoss->Set_Dead();
+		m_pBoss = CAbstractFactory<CBoss00>::Create();
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
+	}
+	if (CKeyMgr::Get_Instance()->Key_Down('2')) {
+		m_pBoss->Set_Dead();
+		m_pBoss = CAbstractFactory<CBoss01>::Create();
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
+	}
+	if (CKeyMgr::Get_Instance()->Key_Down('3')) {
+		m_pBoss->Set_Dead();
+		m_pBoss = CAbstractFactory<CBoss02>::Create();
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
+	}
 }
