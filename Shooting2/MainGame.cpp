@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Boss00.h"
 #include "Boss01.h"
-
+#include "Boss02.h"
 
 
 CMainGame::CMainGame()
@@ -29,7 +29,7 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 
 	CObjMgr::Get_Instance()->Add_Object(OBJID::PLAYER, CAbstractFactory<CPlayer>::Create(300.f, 700.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss00>::Create());
+	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss02>::Create());
 	//CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss01>::Create());
 
 }
