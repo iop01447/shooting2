@@ -21,6 +21,7 @@ protected:
 
 public:
 	const INFO& Get_Info() const { return m_tInfo; }
+	const RECT& Get_Rect() const { return m_tRect; }
 	const bool& Get_Dead() const { return m_bDead; }
 	const float& Get_Angle() const { return m_fAngle; }
 	const int& Get_HP() const { return m_tStatus.iHp; }
@@ -30,6 +31,7 @@ public:
 
 public:
 	void Set_Dead() { m_bDead = true; }
+	void Set_Damage(int _iAtt) { m_tStatus.iHp -= _iAtt; }
 	void Set_Pos(float _x, float _y) { m_tInfo.vPos = { _x, _y, 0.f }; };
 	void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
 	void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }

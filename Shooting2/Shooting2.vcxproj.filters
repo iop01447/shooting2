@@ -73,6 +73,12 @@
     <Filter Include="소스 파일\01.Obj\02.Bullet\02.DelayBullet">
       <UniqueIdentifier>{a90784fe-2199-4886-93a7-887ccba8da09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1">
+      <UniqueIdentifier>{5e977e2a-cf46-4b89-9174-806b0ea073eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\03.Effect">
+      <UniqueIdentifier>{82f1e0d6-5e73-4e0c-b1fc-9e9806b2a963}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -157,10 +163,16 @@
       <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
     </ClInclude>
     <ClInclude Include="Boss00Bullet1.h">
-      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>소스 파일\01.Obj\03.Effect</Filter>
     </ClInclude>
     <ClInclude Include="DelayBullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\02.DelayBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss02Bullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,10 +225,16 @@
       <Filter>소스 파일\01.Obj\02.Bullet\00.PlayerBullet</Filter>
     </ClCompile>
     <ClCompile Include="Boss00Bullet1.cpp">
-      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>소스 파일\01.Obj\03.Effect</Filter>
     </ClCompile>
     <ClCompile Include="DelayBullet.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\02.DelayBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss02Bullet.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

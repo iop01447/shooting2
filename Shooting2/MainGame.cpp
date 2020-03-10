@@ -23,6 +23,8 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize()
 {
+	srand(unsigned(time(NULL)));
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BackBuffer.bmp", L"BackBuffer");
 
@@ -31,6 +33,7 @@ void CMainGame::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJID::PLAYER, CAbstractFactory<CPlayer>::Create(300.f, 700.f));
 
 	m_pBoss = CAbstractFactory<CBoss00>::Create();
+	m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
 }
 
@@ -76,16 +79,19 @@ void CMainGame::KeyCheck()
 	if (CKeyMgr::Get_Instance()->Key_Down('1')) {
 		m_pBoss->Set_Dead();
 		m_pBoss = CAbstractFactory<CBoss00>::Create();
+		m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down('2')) {
 		m_pBoss->Set_Dead();
 		m_pBoss = CAbstractFactory<CBoss01>::Create();
+		m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down('3')) {
 		m_pBoss->Set_Dead();
 		m_pBoss = CAbstractFactory<CBoss02>::Create();
+		m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
 	}
 }
