@@ -159,6 +159,9 @@
     <ClInclude Include="Boss00Bullet1.h">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Boss02Bullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shooting2.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="Boss00Bullet1.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss02Bullet.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
