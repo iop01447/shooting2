@@ -103,3 +103,11 @@ void CBoss02::Render(HDC hDC)
 void CBoss02::Release()
 {
 }
+
+void CBoss02::Move()
+{
+}
+
+void CBoss02::Attack()
+{
+}

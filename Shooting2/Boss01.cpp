@@ -64,3 +64,11 @@ void CBoss01::Render(HDC hDC)
 void CBoss01::Release()
 {
 }
+
+void CBoss01::Move()
+{
+}
+
+void CBoss01::Attack()
+{
+}

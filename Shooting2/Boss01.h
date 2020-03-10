@@ -14,8 +14,12 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
 
+	// CBoss을(를) 통해 상속됨
+	virtual void Move() override;
+	virtual void Attack() override;
+
 private:
 	D3DXVECTOR3 m_vPoint[4]; // Q
-	D3DXVECTOR3 m_vOrigin[4]; // P
+	D3DXVECTOR3 m_vOrigin[4];// P
 };
 
