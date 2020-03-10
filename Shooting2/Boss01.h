@@ -22,8 +22,10 @@ private:
 
 	void Pattern();
 	void Change_Pattern();
+	void InitPattern();
 	void Pattern00();
 	void Pattern01();
+	void Pattern02();
 
 private:
 	D3DXVECTOR3 m_vPoint[4]; // Q
@@ -38,7 +40,7 @@ private:
 	DWORD		m_dwLastPatternChangeTime;
 	DWORD		m_dwPatternTime;
 
-	int			m_iPattern{ 1 };
-	int			m_iMaxPattern{ 2 };
+	int			m_iPattern{ 2 };
+	const int	m_iMaxPattern{ 2 };
 };
 

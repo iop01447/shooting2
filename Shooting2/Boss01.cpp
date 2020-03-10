@@ -2,6 +2,7 @@
 #include "Boss01.h"
 #include "Bullet.h"
 #include "ObjMgr.h"
+#include "DelayBullet.h"
 
 
 CBoss01::CBoss01()
@@ -17,7 +18,7 @@ void CBoss01::Initialize()
 {
 	m_tInfo.vPos = { 300.f, 100.f, 0.f };
 	m_tInfo.vSize = { 50.f, 50.f, 0.f };
-	m_tInfo.vDir = { 0.f, 1.f, 0.f };
+	m_tInfo.vDir = { 0.f, 0.f, 0.f };
 	m_tInfo.vLook = { 0.f, 1.f, 0.f };
 	m_vLookOrigin = m_tInfo.vLook;
 
@@ -37,6 +38,8 @@ void CBoss01::Initialize()
 
 	m_dwPatternTime = 5000;
 	m_dwLastPatternChangeTime = GetTickCount();
+
+	InitPattern();
 }
 
 int CBoss01::Update()
@@ -96,21 +99,45 @@ void CBoss01::Pattern()
 	switch (m_iPattern)
 	{
 	case 0:
-		m_dwAttDelay = 20;
 		Pattern00();
 		break;
 	case 1:
-		m_dwAttDelay = 200;
 		Pattern01();
+		break;
+	case 2:
+		Pattern02();
 		break;
 	}
 }
 
 void CBoss01::Change_Pattern()
 {
-	if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
-		m_iPattern = (m_iPattern + 1) % m_iMaxPattern;
-		m_dwLastPatternChangeTime = GetTickCount();
+	if (m_dwLastPatternChangeTime + m_dwPatternTime > GetTickCount()) return;
+		
+	m_iPattern = (m_iPattern + 1) % m_iMaxPattern;
+	m_dwLastPatternChangeTime = GetTickCount();
+
+	InitPattern();
+}
+
+void CBoss01::InitPattern()
+{
+	switch (m_iPattern)
+	{
+	case 0:
+		m_dwAttDelay = 20;
+		break;
+	case 1:
+		m_dwAttDelay = 200;
+		break;
+	case 2:
+		m_dwAttDelay = 1000;
+		m_tInfo.vDir.x = m_fSpeed;
+		for (int i = 0; i < 10; ++i) {
+			D3DXVECTOR3 vPos = { 100.f + rand() % (WINCX - 200), 100.f + rand() % (WINCY - 200),0.f };
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CDelayBullet>::Create(vPos.x, vPos.y));
+		}
+		break;
 	}
 }
 
@@ -150,6 +177,21 @@ void CBoss01::Pattern01()
 			m_vPosin = m_tInfo.vPos + vDir * m_tInfo.vSize.x;
 			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CBullet>::Create(m_vPosin, vDir));
 		}
+		m_dwLastAttTime = GetTickCount();
+	}
+}
+
+void CBoss01::Pattern02()
+{
+	m_tInfo.vPos.x += m_tInfo.vDir.x;
+	if (m_tInfo.vPos.x > WINCX - 100 || m_tInfo.vPos.x < 100)
+		m_tInfo.vDir.x *= -1;
+
+	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
+	{
+		D3DXVECTOR3 vPos = { 100.f + rand() % (WINCX - 200), 100.f + rand() % (WINCY - 100),0.f };
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CDelayBullet>::Create(vPos.x, vPos.y));
+
 		m_dwLastAttTime = GetTickCount();
 	}
 }
