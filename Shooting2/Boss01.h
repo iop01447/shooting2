@@ -15,6 +15,7 @@ public:
 	virtual void Release() override;
 
 private:
-	
+	D3DXVECTOR3 m_vPoint[4]; // Q
+	D3DXVECTOR3 m_vOrigin[4]; // P
 };
 
