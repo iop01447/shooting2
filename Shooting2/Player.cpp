@@ -80,6 +80,7 @@ void CPlayer::Release()
 
 void CPlayer::KeyCheck()
 {
+	m_fAngle = 0.f;
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
 	{
 		m_tInfo.vPos.y -= m_fSpeed;
