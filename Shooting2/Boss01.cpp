@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "ObjMgr.h"
 #include "DelayBullet.h"
+#include "KeyMgr.h"
 
 
 CBoss01::CBoss01()
@@ -46,9 +47,12 @@ int CBoss01::Update()
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	
+	KeyCheck();
 
 	Pattern();
-	//Change_Pattern();
+	if(!m_bTest)
+		Change_Pattern();
 
 	Update_Matrix();
 	Update_Rect();
@@ -68,6 +72,9 @@ void CBoss01::Render(HDC hDC)
 		LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
 
 	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+
+	if (m_bTest)
+		TextOut(hDC, 100, 100, L"Test Mode", lstrlen(L"Test Mode"));
 }
 
 void CBoss01::Release()
@@ -80,6 +87,22 @@ int CBoss01::wrap(int x, int low, int high)
 	const int n = (x - low) % (high - low);
 	// 부동소수점 자료형: const float n = std::fmod(x - low, high - low);
 	return (n >= 0) ? (n + low) : (n + high);
+}
+
+void CBoss01::KeyCheck()
+{
+	if(CKeyMgr::Get_Instance()->Key_Down('T')) {
+		m_bTest = !m_bTest;
+	}
+	if (!m_bTest) return;
+
+	for (int i = 0; i < m_iMaxPattern; ++i) {
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_NUMPAD0 + i)) {
+			m_iPattern = i;
+			InitPattern();
+			return;
+		}
+	}
 }
 
 void CBoss01::Update_Matrix()
