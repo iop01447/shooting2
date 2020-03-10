@@ -37,6 +37,8 @@ void CBoss00::Initialize()
 
 int CBoss00::Update()
 {
+	Move();
+
 	D3DXMATRIX matScale, matRotZ, matTrance;
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
@@ -114,8 +116,14 @@ void CBoss00::Release()
 
 void CBoss00::Move()
 {
+	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
+	{
+		Attack();
+		return;
+	}
 }
 
 void CBoss00::Attack()
 {
+
 }
