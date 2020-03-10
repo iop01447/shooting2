@@ -11,11 +11,11 @@ public:
 	virtual ~CBoss();
 
 	// CObj을(를) 통해 상속됨
-	virtual void Initialize() override;
-	virtual int Update() override;
-	virtual void Late_Update() override;
-	virtual void Render(HDC hDC) override;
-	virtual void Release() override;
+	virtual void Initialize() override = 0;
+	virtual int Update() override = 0;
+	virtual void Late_Update() override = 0;
+	virtual void Render(HDC hDC) override = 0;
+	virtual void Release() override = 0;
 
 private:
 	//RECT m_tRect; 

@@ -79,25 +79,28 @@ void CPlayer::KeyCheck()
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
 	{
 		m_tInfo.vPos.y -= m_fSpeed;
+		m_fAngle = 0.f;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
 		m_tInfo.vPos.x -= m_fSpeed;
+		m_fAngle = -15.f;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
 		m_tInfo.vPos.x += m_fSpeed;
+		m_fAngle = 15.f;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_DOWN))
 	{
 		m_tInfo.vPos.y += m_fSpeed;
+		m_fAngle = 0.f;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBullet>(m_vPosin.x, m_vPosin.y));
 	}
-
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_ESCAPE))
 	{
