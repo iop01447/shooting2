@@ -44,9 +44,8 @@ int CBoss01::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	Move();
-	Attack();
-//	Change_Pattern();
+	Pattern();
+	//Change_Pattern();
 
 	Update_Matrix();
 	Update_Rect();
@@ -72,26 +71,6 @@ void CBoss01::Release()
 {
 }
 
-void CBoss01::Move()
-{
-	
-}
-
-void CBoss01::Attack()
-{
-	switch (m_iPattern)
-	{
-	case 0:
-		m_dwAttDelay = 20;
-		Pattern00();
-		break;
-	case 1:
-		m_dwAttDelay = 200;
-		Pattern01();
-		break;
-	}
-}
-
 int CBoss01::wrap(int x, int low, int high)
 {
 	assert(low < high);
@@ -110,6 +89,21 @@ void CBoss01::Update_Matrix()
 
 	for (int i = 0; i < 4; ++i)
 		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+}
+
+void CBoss01::Pattern()
+{
+	switch (m_iPattern)
+	{
+	case 0:
+		m_dwAttDelay = 20;
+		Pattern00();
+		break;
+	case 1:
+		m_dwAttDelay = 200;
+		Pattern01();
+		break;
+	}
 }
 
 void CBoss01::Change_Pattern()
@@ -133,25 +127,28 @@ void CBoss01::Pattern00()
 
 	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CBullet>::Create(m_tInfo.vPos, m_tInfo.vLook));
+		m_vPosin = m_tInfo.vPos + m_tInfo.vLook * m_tInfo.vSize.x;
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CBullet>::Create(m_vPosin, m_tInfo.vLook));
 		m_dwLastAttTime = GetTickCount();
 	}
 }
 
 void CBoss01::Pattern01()
 {
-	static int iCnt = 40;
+	int iCnt = 20 + rand() % 20;
+	int iAddAngle = rand() % 360;
 
 	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 	{
 		for (int i = 0; i < iCnt; ++i) {
 			D3DXMATRIX matRotZ;
-			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(i * (360/iCnt)));
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(iAddAngle + i * (360.f/iCnt)));
 			D3DXVECTOR3 vDir, vOrigin;
 			vOrigin = { 0, 1, 0 };
 			D3DXVec3TransformCoord(&vDir, &vOrigin, &matRotZ);
 
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CBullet>::Create(m_tInfo.vPos, vDir));
+			m_vPosin = m_tInfo.vPos + vDir * m_tInfo.vSize.x;
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CBullet>::Create(m_vPosin, vDir));
 		}
 		m_dwLastAttTime = GetTickCount();
 	}

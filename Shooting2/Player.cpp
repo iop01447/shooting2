@@ -28,7 +28,7 @@ void CPlayer::Initialize()
 	m_vOrigin[0] = { -3.f, 2.f, 0.f };
 	m_vOrigin[1] = { 0.f, -1.f, 0.f };
 	m_vOrigin[2] = { 3.f, 2.f, 0.f };
-	m_vOrigin[3] = { 0.f,1.f, 0.f };
+	m_vOrigin[3] = { 0.f, 1.f, 0.f };
 	for (int i = 0; i < 4; ++i) {
 		m_vOrigin[i].x *= m_tInfo.vSize.x;
 		m_vOrigin[i].y *= m_tInfo.vSize.y;
@@ -52,7 +52,7 @@ int CPlayer::Update()
 	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f); 
 	m_tInfo.matWorld = matScale * matRotZ * matTrance;
 
-	m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2), 0.f };
+	m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2 * 5), 0.f };
 
 	for (int i = 0; i < 4; ++i)
 		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
@@ -75,6 +75,9 @@ void CPlayer::Render(HDC hDC)
 
 	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
 
+#ifdef _DEBUG
+	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+#endif
 }
 
 void CPlayer::Release()
