@@ -49,6 +49,12 @@
     <Filter Include="소스 파일\02.MyBitMap">
       <UniqueIdentifier>{69903aa8-7a60-4b9f-93c7-fd56b7abc45e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet">
+      <UniqueIdentifier>{fadccbb7-71c6-42d6-831f-fbcda8a474db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\00.PlayerBullet">
+      <UniqueIdentifier>{109493b8-640a-4e3a-a4a7-b2ab5156b149}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -117,6 +123,9 @@
     <ClInclude Include="MyBitmap.h">
       <Filter>소스 파일\02.MyBitMap</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shooting2.cpp">
@@ -151,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="MyBitmap.cpp">
       <Filter>소스 파일\02.MyBitMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
