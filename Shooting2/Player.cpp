@@ -4,6 +4,7 @@
 #include "ObjMgr.h"
 #include "KeyMgr.h"
 #include "Bullet.h"
+#include "PlayerBullet.h"
 
 
 CPlayer::CPlayer()
@@ -108,7 +109,7 @@ void CPlayer::KeyCheck()
 	{
 		if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBullet>(m_vPosin.x, m_vPosin.y));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CPlayerBullet>(m_vPosin.x, m_vPosin.y));
 			m_dwLastAttTime = GetTickCount();
 		}
 	}
