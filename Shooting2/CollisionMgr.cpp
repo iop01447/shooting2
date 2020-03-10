@@ -13,17 +13,31 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Collision_Rect(list<CObj*>& _Dst, list<CObj*>& _Src)
 {
-	RECT rc = {};
-
 	for (auto& Dst : _Dst)
 	{
 		for (auto& Src : _Src)
 		{
-			//if (IntersectRect(&rc, &(Dst->Get_Rect()), &(Src->Get_Rect())))
-			//{
-			//	Dst->Set_Dead();
-			//	Src->Set_Dead();
-			//}
+			float	fX = 0.f, fY = 0.f;
+
+			if (Check_Rect(Dst, Src, &fX, &fY))
+			{
+				if (fX > fY)	// »óÇÏ
+				{
+					Dst->Set_Dead();
+					Src->Set_Dead();
+				//	if (Dst->Get_Info().vPos.x < Src->Get_Info().vPos.y)
+				//		Src->Set_PosY(fY);
+				//	else
+				//		Src->Set_PosY(-fY);
+				//}
+				//else			// ÁÂ¿ì
+				//{
+				//	if (Dst->Get_Info().fX < Src->Get_Info().fX)
+				//		Src->Set_PosX(fX);
+				//	else
+				//		Src->Set_PosX(-fX);
+				}
+			}
 		}
 	}
 }
@@ -106,19 +120,19 @@ bool CCollisionMgr::Check_Sphere(CObj* _Dst, CObj* _Src)
 
 bool CCollisionMgr::Check_Rect(CObj* _Dst, CObj* _Src, float* _fX, float* _fY)
 {
-	//float	fX = abs(_Dst->Get_Info().fX - _Src->Get_Info().fX);
-	//float	fY = abs(_Dst->Get_Info().fY - _Src->Get_Info().fY);
+	float	fX = abs(_Dst->Get_Info().vPos.x - _Src->Get_Info().vPos.x);
+	float	fY = abs(_Dst->Get_Info().vPos.y - _Src->Get_Info().vPos.y);
 
-	//float	fCX = (float)((_Dst->Get_Info().iCX + _Src->Get_Info().iCX) >> 1);
-	//float	fCY = (float)((_Dst->Get_Info().iCY + _Src->Get_Info().iCY) >> 1);
+	float	fCX = (float)((_Dst->Get_Info().vSize.x + _Src->Get_Info().vSize.x)/2);
+	float	fCY = (float)((_Dst->Get_Info().vSize.y + _Src->Get_Info().vSize.y)/2);
 
-	//if (fCX > fX && fCY > fY)
-	//{
-	//	*_fX = fCX - fX;
-	//	*_fY = fCY - fY;
+	if (fCX > fX && fCY > fY)
+	{
+		*_fX = fCX - fX;
+		*_fY = fCY - fY;
 
-	//	return true;
-	//}
+		return true;
+	}
 
 	return false;
 }
