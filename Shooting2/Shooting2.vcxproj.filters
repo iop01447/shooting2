@@ -55,6 +55,15 @@
     <Filter Include="소스 파일\01.Obj\02.Bullet\00.PlayerBullet">
       <UniqueIdentifier>{109493b8-640a-4e3a-a4a7-b2ab5156b149}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\01.Boss\00.Boss00">
+      <UniqueIdentifier>{01067918-200a-45a6-af29-86d67dc6aa5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\01.Boss\01.Boss01">
+      <UniqueIdentifier>{42f3fb98-538f-456b-893e-849c91d4a2d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\01.Boss\02.Boss02">
+      <UniqueIdentifier>{313bccf7-5e7f-4465-a689-1dc01e6c815b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -126,6 +135,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Boss01.h">
+      <Filter>소스 파일\01.Obj\01.Boss\01.Boss01</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shooting2.cpp">
@@ -163,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss01.cpp">
+      <Filter>소스 파일\01.Obj\01.Boss\01.Boss01</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

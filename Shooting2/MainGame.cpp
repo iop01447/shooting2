@@ -7,7 +7,7 @@
 #include "BmpMgr.h"
 
 #include "Player.h"
-#include "Boss.h"
+#include "Boss01.h"
 
 
 
@@ -28,12 +28,13 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 
 	CObjMgr::Get_Instance()->Add_Object(OBJID::PLAYER, CAbstractFactory<CPlayer>::Create(300.f, 700.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss>::Create());
+	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, CAbstractFactory<CBoss01>::Create());
 
 }
 
 void CMainGame::Update()
 {
+	CKeyMgr::Get_Instance()->Key_Update();
 	CObjMgr::Get_Instance()->Update();
 }
 
