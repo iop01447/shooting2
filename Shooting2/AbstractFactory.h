@@ -20,16 +20,6 @@ public:
 		return pObj;
 	}
 
-	//static CObj* Create(int _Weapon)
-	//{
-	//	CObj* pObj = new T;
-
-	//	pObj->Set_Gold(-_Weapon);
-	//	pObj->Initialize();
-
-	//	return pObj;
-	//}
-
 	static CObj* Create(float _x, float _y)
 	{
 		CObj* pObj = new T;
@@ -42,19 +32,9 @@ public:
 	static CObj* Create(float _x, float _y, float _fAngle)
 	{
 		CObj* pObj = new T;
-		pObj->Initialize();
 		pObj->Set_Pos(_x, _y);
+		pObj->Initialize();
 		pObj->Set_Angle(_fAngle);
-
-		return pObj;
-	}
-	static CObj* Create(float _x, float _y, int _Weapon)
-	{
-		CObj* pObj = new T;
-		
-		pObj->Set_Pos(_x, _y);
-		pObj->Set_Gold(-_Weapon);
-		pObj->Initialize();
 
 		return pObj;
 	}

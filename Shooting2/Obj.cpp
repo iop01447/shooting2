@@ -3,6 +3,7 @@
 
 
 CObj::CObj()
+	: m_bDead(false)
 {
 	ZeroMemory(&m_tInfo, sizeof(m_tInfo));
 	ZeroMemory(&m_tRect, sizeof(m_tRect));

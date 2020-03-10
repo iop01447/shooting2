@@ -15,9 +15,11 @@ CBullet::~CBullet()
 
 void CBullet::Initialize()
 {
-	m_tInfo.vSize.x = 50.f;
-	m_tInfo.vSize.y = 50.f;
+	m_tInfo.vSize.x = 20.f;
+	m_tInfo.vSize.y = 20.f;
 	m_fSpeed = 5.f;
+
+	Update_Rect();
 }
 
 int CBullet::Update()
@@ -34,8 +36,8 @@ int CBullet::Update()
 
 void CBullet::Late_Update()
 {
-	if (0 >= m_tRect.top || 0 >= m_tRect.left
-		|| WINCX <= m_tRect.right || WINCY <= m_tRect.bottom)
+	if (0 > m_tRect.top || 0 > m_tRect.left
+		|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
 		m_bDead = true;
 }
 
