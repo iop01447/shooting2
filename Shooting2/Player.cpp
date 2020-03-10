@@ -36,6 +36,8 @@ void CPlayer::Initialize()
 	m_fAngle = 0.f; 
 	m_fSpeed = 5.f; 
 
+	m_dwAttDelay = 200;
+	m_dwLastAttTime = GetTickCount();
 }
 
 int CPlayer::Update()
@@ -101,9 +103,13 @@ void CPlayer::KeyCheck()
 		m_fAngle = 0.f;
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_SPACE))
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBullet>(m_vPosin.x, m_vPosin.y));
+		if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBullet>(m_vPosin.x, m_vPosin.y));
+			m_dwLastAttTime = GetTickCount();
+		}
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_ESCAPE))
