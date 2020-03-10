@@ -49,8 +49,12 @@ int CPlayer::Update()
 	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f); 
 	m_tInfo.matWorld = matScale * matRotZ * matTrance;
 
+	m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2), 0.f };
+
 	for (int i = 0; i < 4; ++i)
 		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
+	Update_Rect();
 
 	return OBJ_NOEVENT;
 }
