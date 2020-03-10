@@ -23,8 +23,8 @@ public:
 	static CObj* Create(float _x, float _y)
 	{
 		CObj* pObj = new T;
-		pObj->Initialize();
 		pObj->Set_Pos(_x, _y);
+		pObj->Initialize();
 
 		return pObj;
 	}

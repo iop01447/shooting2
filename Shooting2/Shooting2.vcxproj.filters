@@ -67,11 +67,11 @@
     <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet">
       <UniqueIdentifier>{1a3a2b99-45a6-4049-b2ec-c486b01920ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\01.Obj\02.Bullet\02.Boss01Bullet">
-      <UniqueIdentifier>{a90784fe-2199-4886-93a7-887ccba8da09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet">
       <UniqueIdentifier>{e9543454-b2ea-4c68-ae5d-4afbd13adfcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\02.DelayBullet">
+      <UniqueIdentifier>{a90784fe-2199-4886-93a7-887ccba8da09}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\00.Boss00Bullet1">
       <UniqueIdentifier>{5e977e2a-cf46-4b89-9174-806b0ea073eb}</UniqueIdentifier>
@@ -168,6 +168,9 @@
     <ClInclude Include="Effect.h">
       <Filter>소스 파일\01.Obj\03.Effect</Filter>
     </ClInclude>
+    <ClInclude Include="DelayBullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\02.DelayBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shooting2.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>소스 파일\01.Obj\03.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayBullet.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\02.DelayBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
