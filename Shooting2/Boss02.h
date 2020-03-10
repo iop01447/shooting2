@@ -37,5 +37,7 @@ private:
 	DWORD			m_dwAttDelay;
 	DWORD			m_dwAttTime;
 	DWORD			m_dwBulletTime;
+
+	int				iPattern;
 };
 

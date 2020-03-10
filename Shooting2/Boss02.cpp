@@ -35,7 +35,7 @@ void CBoss02::Initialize()
 	m_fAngle = 0.f;
 	m_fSpeed = 5.f;
 
-	m_tStatus.iHp = 1000;
+	m_tStatus.iHp = 100;
 
 	m_fAngle = 0.f;
 	m_fSpeed = 5.f;
@@ -51,7 +51,7 @@ int CBoss02::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (600 <= m_tStatus.iHp)
+	if (60 <= m_tStatus.iHp)
 	{
 		//Áß¾Ó»ó´Ü
 		m_vOrigin[0] = { 0,-m_tInfo.vSize.y * 0.5f, 0.f };
@@ -61,7 +61,7 @@ int CBoss02::Update()
 		m_vOrigin[2] = { -m_tInfo.vSize.x * 0.5f, +m_tInfo.vSize.y * 0.5f, 0.f };
 	}
 	// »ç°¢
-	else if (400 <= m_tStatus.iHp)
+	else if (40 <= m_tStatus.iHp)
 	{
 		//ÁÂ»ó´Ü
 		m_vOrigin[0] = { -m_tInfo.vSize.x* 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
@@ -74,7 +74,7 @@ int CBoss02::Update()
 	}
 
 	// ¿À°¢
-	else if (200 <= m_tStatus.iHp)
+	else if (20 <= m_tStatus.iHp)
 	{
 		//Áß¾Ó»ó´Ü
 		m_vOrigin[0] = {0,-m_tInfo.vSize.y * 0.5f, 0.f };
@@ -103,7 +103,7 @@ int CBoss02::Update()
 		//ÁÂÇÏ´Ü
 		m_vOrigin[4] = {- m_tInfo.vSize.x* 0.5f  *0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
 		//ÁÂÁß´Ü
-		m_vOrigin[5] = {- m_tInfo.vSize.x* 0.5f ,0, 0.f };
+		m_vOrigin[5] = {-m_tInfo.vSize.x* 0.5f ,0, 0.f };
 	}
 	if (m_bDead)
 		return OBJ_DEAD;
@@ -116,7 +116,7 @@ int CBoss02::Update()
 	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	m_tInfo.matWorld = matScale * matRotZ * matTrance;
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 6; ++i)
 		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
 
 	
@@ -132,10 +132,10 @@ void CBoss02::Late_Update()
 void CBoss02::Render(HDC hDC)
 {
 	// ¿ø
-	if (800 <= m_tStatus.iHp)
+	if (80 <= m_tStatus.iHp)
 		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	// »ï°¢
-	else if (600 <= m_tStatus.iHp)
+	else if (60 <= m_tStatus.iHp)
 	{
 		MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
 		for (int i = 1; i < 3; ++i)
@@ -145,7 +145,7 @@ void CBoss02::Render(HDC hDC)
 		LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
 	}
 	// »ç°¢
-	else if (400 <= m_tStatus.iHp)
+	else if (40 <= m_tStatus.iHp)
 	{
 		MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
 		for (int i = 1; i < 4; ++i)
@@ -161,24 +161,8 @@ void CBoss02::Render(HDC hDC)
 
 	}
 	// ¿À°¢
-	else if (200 <= m_tStatus.iHp)
+	else if (20 <= m_tStatus.iHp)
 	{
-
-		//MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
-		////LineTo(hDC, int(m_vPoint[4].x), int(m_vPoint[4].y));
-		//for (int i = 1; i < 5; ++i)
-		//{
-		//	LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
-		//}
-		//LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
-
-		//LineTo(hDC, int(m_vPoint[2].x), int(m_vPoint[2].y));
-		//MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
-		//LineTo(hDC, int(m_vPoint[3].x), int(m_vPoint[3].y));
-
-		//MoveToEx(hDC, int(m_vPoint[1].x), int(m_vPoint[0].y), nullptr);
-		//LineTo(hDC, int(m_vPoint[2].x), int(m_vPoint[2].y));
-
 		for (int i = 0; i < 5; ++i)
 		{
 			for (int j = i; j < 5; ++j)
@@ -193,12 +177,7 @@ void CBoss02::Render(HDC hDC)
 	// À°°¢
 	else if (0 <= m_tStatus.iHp)
 	{
-		//MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
-		//for (int i = 1; i < 6; ++i)
-		//{
-		//	LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
-		//}
-		//LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+		
 
 		for (int i = 0; i < 6; ++i)
 		{
@@ -224,7 +203,8 @@ void CBoss02::Move()
 
 	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 	{
-		m_eState = ATTACK;
+		if (IDLE == m_eState)
+			m_eState = ATTACK;
 		Attack();
 		return;
 	}
@@ -246,16 +226,14 @@ void CBoss02::Move()
 
 void CBoss02::Attack()
 {
-	//Attack1();
-	//Attack2();
-	Attack3();
+	
 }
 
 void CBoss02::Attack1()
 {
 	if(ATTACK != m_eState && ATTACK1 != m_eState)
 		return;
-
+	m_eState = ATTACK1;
 	m_fAngle += 3.f;
 
 	D3DXVECTOR3 vDir = m_vPoint[0] - m_tInfo.vPos;
@@ -268,20 +246,20 @@ void CBoss02::Attack1()
 		fAngle *= -1.f;
 
 	m_fAngle += 0.4f;
-	CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, m_fAngle));
+	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, m_fAngle));
 	
 	if (m_dwLastAttTime + m_dwAttTime < GetTickCount())
 	{
 		m_dwLastAttTime = GetTickCount();
-		m_eState = START;
+		m_eState = IDLE;
 	}
 }
 
 void CBoss02::Attack2()
 {
-	if (ATTACK != m_eState && ATTACK1 != m_eState)
+	if (ATTACK != m_eState && ATTACK2 != m_eState)
 		return;
-
+	m_eState = ATTACK2;
 	m_fAngle += 3.f;
 
 	D3DXVECTOR3 vDir = m_vPoint[0] - m_tInfo.vPos;
@@ -296,20 +274,20 @@ void CBoss02::Attack2()
 	//fAngle *= -4.f;
 	
 	m_fAngle += 3.f;
-	CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle));
+	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle));
 	//CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y,D3DXToRadian(270)));
 	if (/*m_dwLastAttTime + m_dwAttTime < GetTickCount() ||*/ 360 == m_fAngle)
 	{
 		m_dwLastAttTime = GetTickCount();
-		m_eState = START;
+		m_eState = IDLE;
 	}
 }
 
 void CBoss02::Attack3()
 {
-	if (ATTACK != m_eState && ATTACK1 != m_eState)
+	if (ATTACK != m_eState && ATTACK3 != m_eState)
 		return;
-
+	m_eState = ATTACK3;
 	m_fAngle += 3.f;
 
 	D3DXVECTOR3 vDir = m_vPoint[0] - m_tInfo.vPos;
@@ -323,13 +301,13 @@ void CBoss02::Attack3()
 	int iCount = 0;
 	if (m_dwBulletTime + 100 < GetTickCount())
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, D3DXToRadian(270)));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, D3DXToRadian(270)));
 		m_dwBulletTime = GetTickCount();
 	}
 	if (m_dwLastAttTime + m_dwAttTime < GetTickCount())
 	{
 		m_dwLastAttTime = GetTickCount();
-		m_eState = START;
+		m_eState = IDLE;
 		
 	}
 
