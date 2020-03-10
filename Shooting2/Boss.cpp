@@ -28,5 +28,5 @@ void CBoss::Die_Effect()
 		fAngle *= -1.f;
 
 	for (int i = 0; i < 3; ++i)
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CEffect>(vPos.x, vPos.y, fAngle));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::EFFECT, Create_Bullet<CEffect>(vPos.x, vPos.y, fAngle));
 }
