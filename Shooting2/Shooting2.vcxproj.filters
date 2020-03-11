@@ -94,11 +94,11 @@
     <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet">
       <UniqueIdentifier>{a13d01ae-636d-4658-be4d-89a65651acd8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RazerBullet">
-      <UniqueIdentifier>{177af31f-9e64-42f3-bfb1-c723394a2455}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\04.FlowerBullet">
       <UniqueIdentifier>{e4b4424a-d2c7-4339-b6b9-5c09781358cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RazerBullet">
+      <UniqueIdentifier>{177af31f-9e64-42f3-bfb1-c723394a2455}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,10 +207,10 @@
     <ClInclude Include="SmallBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="RotBullet.h">
-      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet</Filter>
     <ClInclude Include="RazerBullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RazerBullet</Filter>
+    <ClInclude Include="RotBullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet</Filter>
     </ClInclude>
     <ClInclude Include="Boss00Bullet2.h">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\03.Boss00Bullet2</Filter>
