@@ -21,7 +21,7 @@ protected:
 
 public:
 	const INFO& Get_Info() const { return m_tInfo; }
-	const RECT& Get_Rect() const { return m_tRect; }
+	virtual const RECT& Get_Rect() const { return m_tRect; }
 	const bool& Get_Dead() const { return m_bDead; }
 	const float& Get_Angle() const { return m_fAngle; }
 	const int& Get_HP() const { return m_tStatus.iHp; }

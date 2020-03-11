@@ -16,7 +16,7 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
 
-	virtual void Set_Damage(int _iAtt){ if (m_bVisible) m_tStatus.iHp -= _iAtt; }
+	virtual const RECT& Get_Rect() const { return m_bVisible ? m_tRect : RECT{ 0,0,0,0 }; }
 
 	virtual void Move() override;
 	virtual void Attack() override;
