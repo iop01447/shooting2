@@ -17,8 +17,12 @@ void CCollisionMgr::Collision_Rect(list<CObj*>& _Dst, list<CObj*>& _Src)
 
 	for (auto& Dst : _Dst)
 	{
+		if (!Dst->Get_Visible()) continue;
+
 		for (auto& Src : _Src)
 		{
+			if (!Src->Get_Visible()) continue;
+
 			if (IntersectRect(&rc, &(Dst->Get_Rect()), &(Src->Get_Rect())))
 			{
 				Dst->Set_Damage(Src->Get_Power());
@@ -83,6 +87,27 @@ void CCollisionMgr::Collision_Sphere(list<CObj*>& _Dst, list<CObj*>& _Src)
 				//		}
 				//	}
 				//}
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_RectDamage(list<CObj*>& _Dst, list<CObj*>& _Src)
+{
+	RECT rc = {};
+
+	for (auto& Dst : _Dst)
+	{
+		if (!Dst->Get_Visible()) continue;
+
+		for (auto& Src : _Src)
+		{
+			if (!Src->Get_Visible()) continue;
+
+			if (IntersectRect(&rc, &(Dst->Get_Rect()), &(Src->Get_Rect())))
+			{
+				Dst->Set_Damage(Src->Get_Power());
+				Src->Set_Damage(Dst->Get_Power());
 			}
 		}
 	}

@@ -21,12 +21,13 @@ protected:
 
 public:
 	const INFO& Get_Info() const { return m_tInfo; }
-	const RECT& Get_Rect() const { return m_tRect; }
+	virtual const RECT& Get_Rect() const { return m_tRect; }
 	const bool& Get_Dead() const { return m_bDead; }
 	const float& Get_Angle() const { return m_fAngle; }
 	const int& Get_HP() const { return m_tStatus.iHp; }
 	const int& Get_MaxHP() const { return m_tStatus.iMaxHp; }
 	const int& Get_Power() const { return m_tStatus.iPower; }
+	bool Get_Visible() { return m_bVisible; }
 
 	const GROUPID::ID Get_GroupID() const { return m_eGroup; }
 	const int& Get_RenderIdx() { return m_iRenderIdx; }
@@ -54,6 +55,8 @@ protected:
 	bool		m_bDead;
 
 	float		m_fAngle;
+	bool		m_bVisible{ true };
+
 
 	int				m_iRenderIdx;
 	GROUPID::ID		m_eGroup;

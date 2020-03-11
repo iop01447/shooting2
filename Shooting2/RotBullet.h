@@ -1,19 +1,22 @@
 #pragma once
-#include "Obj.h"
-class CBullet :
-	public CObj
+#include "Boss02Bullet.h"
+class CRotBullet :
+	public CBoss02Bullet
 {
 public:
-	CBullet();
-	virtual ~CBullet();
+	CRotBullet();
+	virtual ~CRotBullet();
 
-	// CObj을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual int Update() override;
 	virtual void Late_Update() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+private:
+	D3DXVECTOR3		m_tCenter;
 
-	void Die_Effect();
+	float		m_fRotAngle;
+	float		m_fRotSpeed;
+	float		m_fRotDis;
 };
 
