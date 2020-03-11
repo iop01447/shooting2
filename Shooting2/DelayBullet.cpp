@@ -21,7 +21,7 @@ void CDelayBullet::Initialize()
 
 	Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 
-//	m_tStatus.iHp = 1;
+	m_tStatus.iHp = 1;
 
 	Update_Rect();
 }
@@ -62,6 +62,6 @@ int CDelayBullet::Update()
 
 void CDelayBullet::Late_Update()
 {
-//	if (m_tStatus.iHp < 1)
-	//	m_bDead = true;
+	if (m_tStatus.iHp < 1)
+		m_bDead = true;
 }
