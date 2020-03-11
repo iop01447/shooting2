@@ -36,7 +36,7 @@ int CSmallBullet::Update()
 	m_vCenter.x = m_pTarget->Get_Rect().left + 14.f;
 	m_vCenter.y += m_fSpeed;
 
-	m_fAngle += m_fSpeed;
+	m_fAngle += m_fSpeed * 2.5f;
 
 	if (m_tInfo.vPos.x < m_vCenter.x + cosf(D3DXToRadian(m_fAngle)) * m_fRotDis)
 		m_iRenderIdx = 2;
