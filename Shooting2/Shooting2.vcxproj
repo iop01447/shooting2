@@ -170,6 +170,7 @@
     <ClInclude Include="DelayBullet.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
+    <ClInclude Include="FlowerBullet.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Functor.h" />
     <ClInclude Include="Include.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="DelayBullet.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="FlowerBullet.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MyBitmap.cpp" />
