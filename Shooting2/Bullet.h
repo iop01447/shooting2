@@ -15,11 +15,5 @@ public:
 	virtual void Release() override;
 
 	void Die_Effect();
-
-public:
-	void Set_UnDead(bool _bUnDead) { bUnDead = _bUnDead; }
-
-private:
-	bool bUnDead{ false };
 };
 
