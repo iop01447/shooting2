@@ -7,6 +7,12 @@
 class CBoss00Bullet2 :
 	public CBullet
 {
+private:
+	D3DXVECTOR3		m_vPoint[8]; // Q
+	D3DXVECTOR3		m_vOrigin[8]; // P
+
+	int				m_iRand;
+
 public:
 	CBoss00Bullet2();
 	virtual ~CBoss00Bullet2();

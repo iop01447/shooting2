@@ -7,8 +7,9 @@
 class CRazer : public CBullet
 {
 private:
-	DWORD		m_dwDeltaTime;
-	DWORD		m_dwAttTime;
+	DWORD			m_dwDeltaTime;
+	DWORD			m_dwAttTime;
+	list<CObj*>		m_listBullet;
 
 public:
 	CRazer();

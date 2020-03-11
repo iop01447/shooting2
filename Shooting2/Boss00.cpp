@@ -3,6 +3,7 @@
 
 #include "ObjMgr.h"
 #include "Boss00Bullet1.h"
+#include "Boss00Bullet2.h"
 #include "Razer.h"
 
 CBoss00::CBoss00()
@@ -158,9 +159,9 @@ void CBoss00::Move()
 	int iCount = 0;
 	for (auto pBullet : *m_listBullet)
 	{
-		++iCount;
 		if (pBullet->Get_Info().vPos.y > m_tInfo.vPos.y)
 		{
+			++iCount;
 			if (150 > m_tInfo.vPos.x && RIGHT == m_eDir)
 				break;
 			else if (WINCX - 150 < m_tInfo.vPos.x && LEFT == m_eDir)
@@ -211,7 +212,7 @@ void CBoss00::Attack()
 	if (ATTACK == m_eState)
 	{
 		int r = rand() % 3;
-		r = 2;
+		r = 1;
 		switch (r)
 		{
 		case 0:
@@ -258,16 +259,9 @@ void CBoss00::Attack1()
 
 	m_tInfo.vDir = m_vPosin[0] - m_tInfo.vPos;
 	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
-	//float fDot = D3DXVec3Dot(&vDir, &m_tInfo.vLook);
-
-	//float fAngle = acosf(fDot);// acosf 0~ ¤Ð
-
-	//if (m_tInfo.vPos.y < m_vPosin[0].y)
-	//	fAngle *= -1.f;
 
 	for (int i = 0; i < 3; ++i)
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[i], m_tInfo.vDir));
-		//CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[i].x, m_vPosin[i].y, fAngle));
 
 	if (m_dwLastAttTime + m_dwAttTime < GetTickCount())
 	{
@@ -292,42 +286,48 @@ void CBoss00::Attack2()
 	if (m_tInfo.vPos.y < m_vPosin[0].y)
 		fAngle *= -1.f;
 
-	if (0 == m_iCount)
+	if (m_dwLastAttTime + m_dwAttTime + 500 > GetTickCount())
 	{
-		float fAng = -0.6f;
-		for (int i = 0; i < 7; ++i)
+		if (0 == m_iCount)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[0].x, m_vPosin[0].y, fAngle + fAng));
-			fAng += 0.2f;
+			float fAng = -0.6f;
+			for (int i = 0; i < 7; ++i)
+			{
+				CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[0].x, m_vPosin[0].y, fAngle + fAng));
+				fAng += 0.2f;
+			}
 		}
-	}
-	else if (10 == m_iCount)
-	{
-		float fAng = -0.5f;
-		for (int i = 0; i < 6; ++i)
+		else if (10 == m_iCount)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[0].x, m_vPosin[0].y, fAngle + fAng));
-			fAng += 0.2f;
-		}
-	}
-
-	if (0 == m_iCount % 10)
-	{
-		for (int i = 1; i < 3; ++i)
-		{
-			D3DXVECTOR3 vDir = m_pTarget->Get_Info().vPos - m_vPosin[i];
-			D3DXVec3Normalize(&vDir, &vDir);
-			fDot = D3DXVec3Dot(&vDir, &m_tInfo.vLook);
-
-			fAngle = acosf(fDot);// acosf 0~ ¤Ð
-
-			if (m_vPosin[i].y < m_pTarget->Get_Info().vPos.y)
-				fAngle *= -1.f;
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[i].x, m_vPosin[i].y, fAngle));
+			float fAng = -0.5f;
+			for (int i = 0; i < 6; ++i)
+			{
+				CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[0].x, m_vPosin[0].y, fAngle + fAng));
+				fAng += 0.2f;
+			}
 		}
 	}
 
-	if (m_dwLastAttTime + m_dwAttTime < GetTickCount())
+	if (m_dwLastAttTime + m_dwAttTime - 200 < GetTickCount())
+	{
+		if (0 == m_iCount % 10)
+		{
+			for (int i = 1; i < 3; ++i)
+			{
+				D3DXVECTOR3 vDir = m_pTarget->Get_Info().vPos - m_vPosin[i];
+				D3DXVec3Normalize(&vDir, &vDir);
+				fDot = D3DXVec3Dot(&vDir, &m_tInfo.vLook);
+
+				fAngle = acosf(fDot);// acosf 0~ ¤Ð
+
+				if (m_vPosin[i].y < m_pTarget->Get_Info().vPos.y)
+					fAngle *= -1.f;
+				CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet2>(m_vPosin[i], vDir));
+			}
+		}
+	}
+
+	if (m_dwLastAttTime + (m_dwAttTime * 2) < GetTickCount())
 	{
 		m_dwLastAttTime = GetTickCount();
 		m_eState = START;

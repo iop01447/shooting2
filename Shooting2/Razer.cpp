@@ -35,7 +35,23 @@ int CRazer::Update()
 {
 	if (0 > m_tRect.top || WINCY < m_tRect.top)
 	{
+		for (auto pObj : m_listBullet)
+		{
+			pObj->Set_Dead();
+		}
 		return OBJ_DEAD;
+	}
+
+	if (m_pTarget)
+	{
+		if (m_pTarget->Get_Dead())
+		{
+			for (auto pObj : m_listBullet)
+			{
+				pObj->Set_Dead();
+			}
+			return OBJ_DEAD;
+		}
 	}
 
 	if (WINCY * 1.5f > m_tRect.bottom)
@@ -43,6 +59,7 @@ int CRazer::Update()
 		m_tRect.bottom += (LONG)(m_fSpeed / 2);
 		CObj* pObj = Create_Bullet<CSmallBullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, m_fAngle);
 		pObj->Set_Target(this);
+		m_listBullet.emplace_back(pObj);
 		CObjMgr::Get_Instance()->Add_Object(OBJID::EFFECT, pObj);
 		m_dwDeltaTime = GetTickCount();
 	}
@@ -55,6 +72,7 @@ int CRazer::Update()
 	{
 		CObj* pObj = Create_Bullet<CSmallBullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, m_fAngle);
 		pObj->Set_Target(this);
+		m_listBullet.emplace_back(pObj);
 		CObjMgr::Get_Instance()->Add_Object(OBJID::EFFECT, pObj);
 	}
 
