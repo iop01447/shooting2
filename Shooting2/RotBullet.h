@@ -18,5 +18,6 @@ private:
 	float		m_fRotAngle;
 	float		m_fRotSpeed;
 	float		m_fRotDis;
+	bool		m_bDir;
 };
 

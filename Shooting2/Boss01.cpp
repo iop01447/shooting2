@@ -328,6 +328,10 @@ void CBoss01::Pattern03()
 		m_bFirst = false;
 	}
 
+	m_fAngle = m_fAngle - 5;
+	if (m_fAngle < -365)
+		m_fAngle = 0;
+
 	if (!m_bTransition &&
 		(m_dwLastAttTime + m_dwAttDelay < GetTickCount()))
 	{

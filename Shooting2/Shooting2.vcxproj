@@ -171,6 +171,7 @@
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="FlowerBullet.h" />
+    <ClInclude Include="FlowerSubBullet.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Functor.h" />
     <ClInclude Include="Include.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="Razer.h" />
+    <ClInclude Include="RazerBullet.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RotBullet.h" />
     <ClInclude Include="Shooting2.h" />
@@ -205,6 +207,7 @@
     <ClCompile Include="DelayBullet.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="FlowerBullet.cpp" />
+    <ClCompile Include="FlowerSubBullet.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MyBitmap.cpp" />
@@ -212,6 +215,7 @@
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="RazerBullet.cpp" />
     <ClCompile Include="RotBullet.cpp" />
     <ClCompile Include="Razer.cpp" />
     <ClCompile Include="Shooting2.cpp" />

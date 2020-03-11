@@ -2,6 +2,8 @@
 #include "Boss02.h"
 #include "Boss02Bullet.h"
 #include "RotBullet.h"
+#include "RazerBullet.h"
+
 #include "ObjMgr.h"
 
 CBoss02::CBoss02()
@@ -140,16 +142,7 @@ int CBoss02::Update()
 	Move();
 
 
-	//if (m_ePhase == PHASE1)
-	//	D3DXMatrixScaling(&matScale, 1.5f, 1.5f, 0.f);
-	//else if (m_ePhase == PHASE2)
-	//	D3DXMatrixScaling(&matScale, 1.4f, 1.4f, 0.f);
-	//else if (m_ePhase == PHASE3)
-	//	D3DXMatrixScaling(&matScale, 1.3f, 1.3f, 0.f);
-	//else if (m_ePhase == PHASE4)
-	//	D3DXMatrixScaling(&matScale, 1.2f, 1.2f, 0.f);
-	//else if (m_ePhase == PHASE5)
-	//	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+
 
 	D3DXMATRIX matScale, matRotZ, matTrance;
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
@@ -276,11 +269,12 @@ void CBoss02::Move()
 
 void CBoss02::Attack()
 {
+	Attack3();
 	if (m_bDir)
 		m_fAngle += 3.f;
 	else
 		m_fAngle -= 3.f;
-	
+	/*
 	if (ATTACK == m_eState)
 	{
 		int r = rand() % 5;
@@ -326,7 +320,7 @@ void CBoss02::Attack()
 		break;
 	default:
 		break;
-	}
+	}*/
 
 	//if (m_bDir)
 	//	m_fAngle += 3.f;
@@ -454,49 +448,48 @@ void CBoss02::Attack2()
 
 void CBoss02::Attack3()
 {
-	//if (ATTACK != m_eState && ATTACK3 != m_eState)
-	//	return;
-	//m_eState = ATTACK3;
-	//if (m_bDir)
-	//	m_fAngle += 3.f;
-	//else
-	//	m_fAngle -= 3.f;
-
-	D3DXVECTOR3 vDir = m_vPoint[0] - m_tInfo.vPos;
-	D3DXVec3Normalize(&vDir, &vDir);
-	float fDot = D3DXVec3Dot(&vDir, &m_tInfo.vLook);
-
-	float fAngle = acosf(fDot);// acosf 0~ ¤Ð
-
-	if (m_tInfo.vPos.y < m_vPoint[0].y)
-		fAngle *= -1.f;
+	D3DXVECTOR3 vDir[6] = {};
+	for (int i = 0; i < 6; i++)
+	{
+		vDir[i] = m_vPoint[i] - m_tInfo.vPos;
+		D3DXVec3Normalize(&vDir[i], &vDir[i]);
+	}
 
 	if (m_dwBulletTime + 100 < GetTickCount())
 	{
 		if (m_ePhase == PHASE1)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, D3DXToRadian(270)));
-
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0], m_fAngle));
 		}
 		else if (m_ePhase == PHASE2)
 		{	
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x + m_tInfo.vSize.x / 2, m_tInfo.vPos.y, D3DXToRadian(270)));
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x - m_tInfo.vSize.x / 2, m_tInfo.vPos.y, D3DXToRadian(270)));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0],m_fAngle));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[1], vDir[1], m_fAngle));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[2], vDir[2], m_fAngle));
 		}
 		else if (m_ePhase == PHASE3)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, D3DXToRadian(270)));
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x + m_tInfo.vSize.x / 2, m_tInfo.vPos.y, D3DXToRadian(270)));
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x - m_tInfo.vSize.x / 2, m_tInfo.vPos.y, D3DXToRadian(270)));
-
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[1], vDir[1]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[2], vDir[2]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[3], vDir[3]));
 		}
 		else if (m_ePhase == PHASE4)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, D3DXToRadian(270)));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[1], vDir[1]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[2], vDir[2]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[3], vDir[3]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[4], vDir[4]));
 		}
 		else if (m_ePhase == PHASE5)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, D3DXToRadian(270)));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[0], vDir[0]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[1], vDir[1]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[2], vDir[2]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[3], vDir[3]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[4], vDir[4]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[5], vDir[5]));
 		}
 		m_dwBulletTime = GetTickCount();
 	}
@@ -567,8 +560,7 @@ void CBoss02::Attack5()
 	//}
 	for (size_t i = 0; i < 6; i++)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[i], vDir[i]));
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[i], vDir[i]));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[i], vDir[i]));	
 	}
 	if (m_fAngle >= 360 || m_fAngle <= -360)
 	{

@@ -42,7 +42,6 @@ int CBullet::Update()
 
 void CBullet::Late_Update()
 {
-	if (bUnDead) return;
 	if (0 > m_tRect.top || 0 > m_tRect.left
 		|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
 		m_bDead = true;

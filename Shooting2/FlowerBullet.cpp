@@ -2,6 +2,7 @@
 #include "FlowerBullet.h"
 #include "ObjMgr.h"
 #include "AbstractFactory.h"
+#include "FlowerSubBullet.h"
 
 
 CFlowerBullet::CFlowerBullet()
@@ -36,9 +37,8 @@ void CFlowerBullet::Initialize()
 		vOrigin = vPos;
 
 		vPos += m_tInfo.vPos;
-		CObj* bullet = CAbstractFactory<CBullet>::Create(vPos, vDir);
+		CObj* bullet = CAbstractFactory<CFlowerSubBullet>::Create(vPos, vDir);
 		bullet->Set_Size(5, 5);
-		dynamic_cast<CBullet*>(bullet)->Set_UnDead(true);
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, bullet);
 		m_mapBullet.emplace(bullet, vOrigin);
 	}
@@ -51,7 +51,7 @@ int CFlowerBullet::Update()
 	if (m_bDead) {
 		for (auto& bullet : m_mapBullet) {
 			if (bullet.first)
-				bullet.first->Set_Dead();
+				dynamic_cast<CFlowerSubBullet*>(bullet.first)->Set_ParentErase(true);
 		}
 		return OBJ_DEAD;
 	}
@@ -80,8 +80,10 @@ void CFlowerBullet::Late_Update()
 	if (0 > m_tRect.top || 0 > m_tRect.left
 		|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
 		m_bDead = true;
+
 	for (auto iter = m_mapBullet.begin(); iter != m_mapBullet.end();) {
-		if (iter->first == nullptr || (iter->first)->Get_Dead()) {
+		if ((iter->first)->Get_Dead()) {
+			dynamic_cast<CFlowerSubBullet*>(iter->first)->Set_ParentErase(true);
 			iter = m_mapBullet.erase(iter);
 		}
 		else
