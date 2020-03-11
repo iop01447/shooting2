@@ -3,9 +3,11 @@
 
 #include "ObjMgr.h"
 #include "Boss00Bullet1.h"
+#include "Razer.h"
 
 CBoss00::CBoss00()
 {
+	ZeroMemory(m_pRazer, sizeof(m_pRazer));
 }
 
 
@@ -24,6 +26,14 @@ void CBoss00::Initialize()
 	m_vOriginPosin[1] = { -m_tInfo.vSize.x * 0.4f, (0.f + m_tInfo.vSize.y / 2 + 10.f), 0.f };
 	m_vOriginPosin[2] = { m_tInfo.vSize.x * 0.4f, (0.f + m_tInfo.vSize.y / 2 + 10.f), 0.f };
 	memcpy(&m_vStart, &m_tInfo.vPos, sizeof(m_vStart));
+
+	for (int i = 0; i < 2; ++i)
+	{
+		m_vOriginRazer[i][0] = { m_vOriginPosin[i + 1].x - 7.f ,m_vOriginPosin[i + 1].y - 10.f, 0.f };
+		m_vOriginRazer[i][1] = { m_vOriginPosin[i + 1].x + 7.f ,m_vOriginPosin[i + 1].y - 10.f, 0.f };
+		m_vOriginRazer[i][2] = { m_vOriginPosin[i + 1].x + 7.f ,m_vOriginPosin[i + 1].y - 10.f, 0.f };
+		m_vOriginRazer[i][3] = { m_vOriginPosin[i + 1].x - 7.f ,m_vOriginPosin[i + 1].y - 10.f, 0.f };
+	}
 
 	//¿øÁ¡ ±âÁØ ÁÂ»ó´Ü ÁÂÇ¥ 
 	m_vOrigin[0] = { -m_tInfo.vSize.x * 0.5f,-m_tInfo.vSize.y * 0.5f, 0.f };
@@ -73,6 +83,10 @@ int CBoss00::Update()
 	for (int i = 0; i < 3; ++i)
 		D3DXVec3TransformCoord(&m_vPosin[i], &m_vOriginPosin[i], &m_tInfo.matWorld);
 
+	for (int i = 0; i < 2; ++i)
+		for (int j = 0; j < 4; ++j)
+			D3DXVec3TransformCoord(&m_vRazer[i][j], &m_vOriginRazer[i][j], &m_tInfo.matWorld);
+
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -86,17 +100,27 @@ void CBoss00::Late_Update()
 
 void CBoss00::Render(HDC hDC)
 {
-	MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
+	MoveToEx(hDC, int(m_vPoint[3].x), int(m_vPoint[3].y), nullptr);
 
-	for (int i = 1; i < 4; ++i)
+	for (int i = 0; i < 4; ++i)
 		LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
 
-	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+	//for (int i = 0; i < 3; ++i)
+	//{
+	//	MoveToEx(hDC, int(m_tInfo.vPos.x), int(m_tInfo.vPos.y), nullptr);
+	//	LineTo(hDC, int(m_vPosin[i].x), int(m_vPosin[i].y));
+	//}
 
-	for (int i = 0; i < 3; ++i)
+	if (ATTACK3 == m_eState)
 	{
-		MoveToEx(hDC, int(m_tInfo.vPos.x), int(m_tInfo.vPos.y), nullptr);
-		LineTo(hDC, int(m_vPosin[i].x), int(m_vPosin[i].y));
+		for (int i = 0; i < 2; ++i)
+		{
+			MoveToEx(hDC, int(m_vRazer[i][3].x), int(m_vRazer[i][3].y), nullptr);
+			for (int j = 0; j < 4; ++j)
+			{
+				LineTo(hDC, int(m_vRazer[i][j].x), int(m_vRazer[i][j].y));
+			}
+		}
 	}
 }
 
@@ -114,10 +138,10 @@ void CBoss00::Move()
 		if (IDLE == m_eState)
 			m_eState = ATTACK;
 		Attack();
-		return;
+		//return;
 	}
 
-	if (0 != m_fAngle)
+	if (ATTACK1 != m_eState && 0 != m_fAngle)
 	{
 		if (180 > m_fAngle)
 			m_fAngle -= 5.f;
@@ -128,11 +152,13 @@ void CBoss00::Move()
 	if (START == m_eState)
 	{
 		BackStartPos();
-		return;
+		//return;
 	}
 
+	int iCount = 0;
 	for (auto pBullet : *m_listBullet)
 	{
+		++iCount;
 		if (pBullet->Get_Info().vPos.y > m_tInfo.vPos.y)
 		{
 			if (150 > m_tInfo.vPos.x && RIGHT == m_eDir)
@@ -148,7 +174,10 @@ void CBoss00::Move()
 					m_eDir = RIGHT;
 			}
 			else
+			{
 				m_eDir = DIR_END;
+				continue;
+			}
 
 			if (80 > m_tInfo.vPos.x)
 				m_eDir = RIGHT;
@@ -157,6 +186,9 @@ void CBoss00::Move()
 
 			break;
 		}
+
+		if (5 < iCount)
+			break;
 	}
 
 	switch (m_eDir)
@@ -178,8 +210,8 @@ void CBoss00::Attack()
 {
 	if (ATTACK == m_eState)
 	{
-		int r = rand() % 2;
-
+		int r = rand() % 3;
+		r = 0;
 		switch (r)
 		{
 		case 0:
@@ -194,8 +226,9 @@ void CBoss00::Attack()
 		default:
 			break;
 		}
+		m_iCount = 0;
 	}
-
+	
 	switch (m_eState)
 	{
 	case CBoss00::ATTACK1:
@@ -205,6 +238,7 @@ void CBoss00::Attack()
 		Attack2();
 		break;
 	case CBoss00::ATTACK3:
+		Attack3();
 		break;
 	default:
 		break;
@@ -218,33 +252,22 @@ void CBoss00::Attack1()
 
 	m_eState = ATTACK1;
 
-	D3DXVECTOR3 vPos = { WINCX / 2, WINCY / 2, 0.f };
-	m_tInfo.vDir = vPos - m_tInfo.vPos;
-	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
-
-	float fDot = D3DXVec3Dot(&m_tInfo.vDir, &m_tInfo.vLook);
-
-	float fAngle = acosf(fDot);
-
-	if (m_tInfo.vPos.y < vPos.y)
-		fAngle *= -1.f;
-
-	m_tInfo.vPos.x += cosf(fAngle) * m_fSpeed;
-	m_tInfo.vPos.y -= sinf(fAngle) * m_fSpeed;
+	m_tInfo.vPos.y += m_fSpeed;
 
 	m_fAngle += 5.f;
 
-	D3DXVECTOR3 vDir = m_vPosin[0] - m_tInfo.vPos;
-	D3DXVec3Normalize(&vDir, &vDir);
-	fDot = D3DXVec3Dot(&vDir, &m_tInfo.vLook);
+	m_tInfo.vDir = m_vPosin[0] - m_tInfo.vPos;
+	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
+	//float fDot = D3DXVec3Dot(&vDir, &m_tInfo.vLook);
 
-	fAngle = acosf(fDot);// acosf 0~ ¤Ð
+	//float fAngle = acosf(fDot);// acosf 0~ ¤Ð
 
-	if (m_tInfo.vPos.y < m_vPosin[0].y)
-		fAngle *= -1.f;
+	//if (m_tInfo.vPos.y < m_vPosin[0].y)
+	//	fAngle *= -1.f;
 
 	for (int i = 0; i < 3; ++i)
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[i].x, m_vPosin[i].y, fAngle));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[i], m_tInfo.vDir));
+		//CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss00Bullet1>(m_vPosin[i].x, m_vPosin[i].y, fAngle));
 
 	if (m_dwLastAttTime + m_dwAttTime < GetTickCount())
 	{
@@ -318,6 +341,45 @@ void CBoss00::Attack2()
 
 void CBoss00::Attack3()
 {
+	if (m_dwLastAttTime + m_dwAttTime + 1000 < GetTickCount())
+	{
+		if (m_vOriginPosin[0].y != m_vOriginRazer[0][2].y)
+		{
+			for (int i = 0; i < 2; ++i)
+				for (int j = 2; j < 4; ++j)
+					m_vOriginRazer[i][j].y -= 2.f;
+			return;
+		}
+		m_dwLastAttTime = GetTickCount();
+		m_eState = IDLE;
+		m_iCount = 0;
+		for (int i = 0; i < 2; ++i)
+			m_pRazer[i] = nullptr;
+		return;
+	}
+
+	if (m_vOriginPosin[0].y + 50.f > m_vOriginRazer[0][2].y)
+	{
+		for (int i = 0; i < 2; ++i)
+			for (int j = 2; j < 4; ++j)
+				m_vOriginRazer[i][j].y += 2.f;
+
+		return;
+	}
+
+	if (20 == m_iCount)
+		for (int i = 0; i < 2; ++i)
+		{
+			m_pRazer[i] = Create_Bullet<CRazer>(m_vRazer[i][0].x + 7.f, m_vRazer[i][2].y + 10.f);
+			m_pRazer[i]->Set_Target(this);
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, m_pRazer[i]);
+		}
+
+	++m_iCount;
+
+	for (int i = 0; i < 2; ++i)
+		if (m_pRazer[i])
+			dynamic_cast<CRazer*>(m_pRazer[i])->Set_PosX(m_vRazer[i][0].x + 7.f);
 }
 
 void CBoss00::BackStartPos()
@@ -338,8 +400,9 @@ void CBoss00::BackStartPos()
 		return;
 	}
 
-	m_tInfo.vPos.x += cosf(fAngle) * m_fSpeed;
-	m_tInfo.vPos.y -= sinf(fAngle) * m_fSpeed;
+	//m_tInfo.vPos.x += cosf(fAngle) * m_fSpeed;
+	//m_tInfo.vPos.y -= sinf(fAngle) * m_fSpeed;
+	m_tInfo.vPos.y -= m_fSpeed;
 
 	m_dwLastAttTime = GetTickCount();
 }

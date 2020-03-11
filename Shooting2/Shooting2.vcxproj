@@ -158,9 +158,11 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Boss00.h" />
     <ClInclude Include="Boss00Bullet1.h" />
+    <ClInclude Include="Boss00Bullet2.h" />
     <ClInclude Include="Boss01.h" />
     <ClInclude Include="Boss02.h" />
     <ClInclude Include="Boss02Bullet.h" />
+    <ClInclude Include="BossAlter.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Define.h" />
@@ -178,9 +180,11 @@
     <ClInclude Include="ObjMgr.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="Razer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RotBullet.h" />
     <ClInclude Include="Shooting2.h" />
+    <ClInclude Include="SmallBullet.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
@@ -190,9 +194,11 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Boss00.cpp" />
     <ClCompile Include="Boss00Bullet1.cpp" />
+    <ClCompile Include="Boss00Bullet2.cpp" />
     <ClCompile Include="Boss01.cpp" />
     <ClCompile Include="Boss02.cpp" />
     <ClCompile Include="Boss02Bullet.cpp" />
+    <ClCompile Include="BossAlter.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="DelayBullet.cpp" />
@@ -205,7 +211,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="RotBullet.cpp" />
+    <ClCompile Include="Razer.cpp" />
     <ClCompile Include="Shooting2.cpp" />
+    <ClCompile Include="SmallBullet.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

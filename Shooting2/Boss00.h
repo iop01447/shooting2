@@ -27,6 +27,12 @@ public:
 	virtual void Move() override;
 	virtual void Attack() override;
 
+	void Set_Razer() 
+	{
+		for (int i = 0; i < 2; ++i)
+			m_pRazer[i] = nullptr;
+	}
+
 private:
 	void Attack1();
 	void Attack2();
@@ -44,6 +50,9 @@ private:
 	D3DXVECTOR3		m_vPosin[3];
 	D3DXVECTOR3		m_vOriginPosin[3];
 
+	D3DXVECTOR3		m_vRazer[2][4];
+	D3DXVECTOR3		m_vOriginRazer[2][4];
+
 	DWORD			m_dwLastAttTime;
 	DWORD			m_dwAttDelay;
 	DWORD			m_dwAttTime;
@@ -51,6 +60,7 @@ private:
 	int				m_iCount;
 
 	list<CObj*>*	m_listBullet;
+	CObj*			m_pRazer[2];
 };
 
 #endif // !__BOSS00_H__

@@ -9,6 +9,7 @@ public:
 
 	virtual void Initialize() override;
 	virtual int Update() override;
+	virtual void Late_Update() override;
 
 private:
 	DWORD m_dwLastTime;

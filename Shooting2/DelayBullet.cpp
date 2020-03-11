@@ -21,13 +21,19 @@ void CDelayBullet::Initialize()
 
 	Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 
+//	m_tStatus.iHp = 1;
+
 	Update_Rect();
 }
 
 int CDelayBullet::Update()
 {
-	if (m_bDead)
+	if (m_bDead) {
+		for (int i = 0; i < 50; ++i)
+			Die_Effect();
+
 		return OBJ_DEAD;
+	}
 
 	if (!m_bMove) {
 		static int iCnt = 3;
@@ -52,4 +58,10 @@ int CDelayBullet::Update()
 	Update_Rect();
 
 	return OBJ_NOEVENT;
+}
+
+void CDelayBullet::Late_Update()
+{
+//	if (m_tStatus.iHp < 1)
+	//	m_bDead = true;
 }

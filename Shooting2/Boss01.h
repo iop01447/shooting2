@@ -1,5 +1,7 @@
 #pragma once
 #include "Boss.h"
+
+class CObj;
 class CBoss01 :
 	public CBoss
 {
@@ -18,16 +20,20 @@ public:
 	int wrap(int x, int low, int high);
 
 private:
+	// Update
 	void KeyCheck();
-	void Update_Matrix();
 
 	void Pattern();
-	void Change_Pattern();
-	void InitPattern();
-	void Pattern00();
-	void Pattern01();
-	void Pattern02();
+	void Set_Pattern(int _iPatter);
+	void Pattern00(); // 사방팔방 쏘기
+	void Pattern01(); // 분신이 크리스마스트리 쏘기
+	void Pattern02(); // 총알 지진 후 플레이어 쪽으로 이동
+	void Pattern03(); // 레이저
+	void Pattern04(); // 꽃
 
+private:
+	void AlterMode_On();
+	void AlterMode_Off();
 
 private:
 	D3DXVECTOR3 m_vPoint[4]; // Q
@@ -42,9 +48,17 @@ private:
 	DWORD		m_dwLastPatternChangeTime;
 	DWORD		m_dwPatternTime;
 
-	int			m_iPattern{ 0 };
+	int			m_iPattern;
 	const int	m_iMaxPattern{ 3 };
 
-	bool		m_bTest{ false };
+	//bool		m_bTest{ false };
+	bool		m_bTransition{ false };
+	bool		m_bAlterMode{ false };
+	bool		m_bFirst{ true };
+
+	CObj*		m_pAlter[2]{ nullptr };
+	int			m_iAlterCnt{ 2 };
+
+	int			m_iPhase{ 0 };
 };
 
