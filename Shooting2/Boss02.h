@@ -6,7 +6,7 @@ class CBoss02 :
 public:
 	CBoss02();
 	virtual ~CBoss02();
-
+	
 private:
 	enum STATE { IDLE, START, ATTACK, ATTACK1, ATTACK2, ATTACK3, ATTACK4, ATTACK5, END };
 	enum PHASE { PHASE1, PHASE2, PHASE3, PHASE4, PHASE5, PHASE_END };

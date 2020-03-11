@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RazerBullet.h"
-
+#include "Boss02.h"
 
 CRazerBullet::CRazerBullet()
 {
@@ -27,7 +27,18 @@ int CRazerBullet::Update()
 		return OBJ_DEAD;
 
 	m_tInfo.vPos +=  m_tInfo.vDir;
+	m_vOrigin = { -m_tInfo.vSize.x* 0.5f  ,-m_tInfo.vSize.y* 0.5f , 0.f };
 	
+	D3DXMATRIX matRotZ;
+	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+	m_tInfo.matWorld = matRotZ;
+
+	for (int i = 0; i < 6; ++i)
+		D3DXVec3TransformCoord(&m_tInfo.vPos, &m_vOrigin, &m_tInfo.matWorld);
+
+	Update_Rect();
+
+	return OBJ_NOEVENT;
 
 
 
