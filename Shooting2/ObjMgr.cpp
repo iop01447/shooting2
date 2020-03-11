@@ -65,6 +65,7 @@ void CObjMgr::Late_Update()
 	CCollisionMgr::Collision_Rect(m_listObj[OBJID::MONSTER], m_listObj[OBJID::BULLET]);
 	CCollisionMgr::Collision_Rect(m_listObj[OBJID::PLAYER], m_listObj[OBJID::BOSSBULLET]);
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::PLAYER], m_listObj[OBJID::GOLD]);
+	CCollisionMgr::Collision_Rect(m_listObj[OBJID::BULLET], m_listObj[OBJID::BOSSBULLET]);
 }
 
 void CObjMgr::Render(HDC _DC)

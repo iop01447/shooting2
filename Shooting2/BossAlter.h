@@ -23,7 +23,6 @@ public:
 public:
 	void Set_GoalPos(float _fX, float _fY);
 	bool Get_GrayMode(){ return m_bGrayMode; }
-	bool Get_Finish() { return m_bFinish; }
 
 private:
 	void Check_GrayMode();
@@ -31,7 +30,6 @@ private:
 private:
 	bool m_bTransition{ false };
 	bool m_bGrayMode{ false };
-	bool m_bFinish{ false };
 
 	DWORD		m_dwLastAttTime;
 	DWORD		m_dwAttDelay;

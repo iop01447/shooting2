@@ -27,7 +27,7 @@ public:
 	const int& Get_HP() const { return m_tStatus.iHp; }
 	const int& Get_MaxHP() const { return m_tStatus.iMaxHp; }
 	const int& Get_Power() const { return m_tStatus.iPower; }
-
+	bool Get_Visible() { return m_bVisible; }
 
 public:
 	void Set_Dead() { m_bDead = true; }
@@ -52,6 +52,8 @@ protected:
 	bool		m_bDead;
 
 	float		m_fAngle;
+	bool		m_bVisible{ true };
+
 };
 
 #endif // !__OBJ_H__

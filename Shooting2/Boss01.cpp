@@ -47,9 +47,7 @@ void CBoss01::Initialize()
 	m_tStatus.iHp = m_tStatus.iMaxHp;
 	m_tStatus.iPower = 1;
 
-	m_iPattern = 0;
-
-	InitPattern();
+	Set_Pattern(0);
 }
 
 int CBoss01::Update()
@@ -57,19 +55,17 @@ int CBoss01::Update()
 	if (m_bDead) {
 		for (int i = 0; i < 50; ++i)
 			Die_Effect();
+
+		for (int i = 0; i < m_iAlterCnt; ++i) {
+			if (m_pAlter[i])
+				m_pAlter[i]->Set_Dead();
+		}
+
 		return OBJ_DEAD;
 	}
 
 	KeyCheck();
-
-	if (m_bTransition)
-		Move();
-	else
-		Attack();
-
-	if(!m_bTest)
-		Change_Pattern();
-
+	Pattern();
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -83,8 +79,8 @@ void CBoss01::Late_Update()
 
 void CBoss01::Render(HDC hDC)
 {
-	if (m_bTest)
-		TextOut(hDC, 100, 100, L"Test Mode", lstrlen(L"Test Mode"));
+//	if (m_bTest)
+//		TextOut(hDC, 100, 100, L"Test Mode", lstrlen(L"Test Mode"));
 
 	if (m_bAlterMode) return;
 
@@ -109,51 +105,20 @@ void CBoss01::Release()
 {
 }
 
-void CBoss01::Move()
+int CBoss01::wrap(int x, int low, int high)
 {
-	switch (m_iPattern)
-	{
-	case 0:
-		m_bTransition = false;
-		break;
-	case 1:
-		m_bTransition = false;
-		break;
-	case 2:
-	{
-		static int iPhase = 0;
-		switch (iPhase)
-		{
-		case 0:
-			if (all_of(m_pAlter, m_pAlter + m_iAlterCnt, [](CObj* pObj) {
-				assert(pObj != nullptr);
-				return dynamic_cast<CBossAlter*>(pObj)->Get_Finish();
-			})) {
-				for (int i = 0; i < m_iAlterCnt; ++i) {
-					m_pAlter[i]->Set_Dead();
-				}
-				AlterMode_Off();
-				iPhase = 1;
-			}
-			break;
-		case 1:
-			m_tInfo.vPos.y -= m_fSpeed;
-			if (m_tInfo.vPos.y < -100)
-				m_bTransition = false;
-			break;
-		}
-	}
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	default:
-		break;
-	}
+	assert(low < high);
+	const int n = (x - low) % (high - low);
+	// 부동소수점 자료형: const float n = std::fmod(x - low, high - low);
+	return (n >= 0) ? (n + low) : (n + high);
 }
 
-void CBoss01::Attack()
+void CBoss01::KeyCheck()
+{
+	// 치트 포기 ㅎㅎ
+}
+
+void CBoss01::Pattern()
 {
 	switch (m_iPattern)
 	{
@@ -175,122 +140,26 @@ void CBoss01::Attack()
 	}
 }
 
-int CBoss01::wrap(int x, int low, int high)
+void CBoss01::Set_Pattern(int _iPattern)
 {
-	assert(low < high);
-	const int n = (x - low) % (high - low);
-	// 부동소수점 자료형: const float n = std::fmod(x - low, high - low);
-	return (n >= 0) ? (n + low) : (n + high);
-}
-
-void CBoss01::KeyCheck()
-{
-	if(CKeyMgr::Get_Instance()->Key_Down('T')) {
-		m_bTest = !m_bTest;
-	}
-	if (!m_bTest) return;
-
-	for (int i = 0; i < m_iMaxPattern; ++i) {
-		if (CKeyMgr::Get_Instance()->Key_Down(VK_NUMPAD0 + i)) {
-			m_iPattern = i;
-			InitPattern();
-			return;
-		}
-	}
-}
-
-void CBoss01::Change_Pattern()
-{
-	//m_iPattern = (m_iPattern + 1) % m_iMaxPattern;
-	if (m_bTransition) return;
-
-	switch (m_iPattern)
-	{
-	case 0:
-		if (m_tStatus.iHp < m_tStatus.iMaxHp * 0.3f) {
-			++m_iPattern;
-			InitPattern();
-		}
-		break;
-	case 1:
-		if (all_of(m_pAlter, m_pAlter + m_iAlterCnt, [](CObj* pObj) {
-			return dynamic_cast<CBossAlter*>(pObj)->Get_GrayMode();
-		})) {
-			++m_iPattern;
-			for (int i = 0; i < m_iAlterCnt; ++i) {
-				dynamic_cast<CBossAlter*>(m_pAlter[i])->Set_GoalPos(m_tInfo.vPos.x, m_tInfo.vPos.y);
-			}
-			InitPattern();
-		}
-		break;
-	case 2:
-		if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
-			++m_iPattern;
-			InitPattern();
-		}
-		break;
-	case 3:
-		if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
-			++m_iPattern;
-			InitPattern();
-		}
-		break;
-	case 4:
-		if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
-			--m_iPattern;
-			InitPattern();
-		}
-		break;
-	default:
-		break;
-	}
-}
-
-void CBoss01::InitPattern()
-{
-	m_bTransition = true;
-	m_tStatus.iHp = m_tStatus.iMaxHp;
-	m_dwLastPatternChangeTime = GetTickCount();
-
-	switch (m_iPattern)
-	{
-	case 0: 
-		m_dwAttDelay = 200;
-		break;
-	case 1:
-		for (int i = 0; i < m_iAlterCnt; ++i) {
-			if (m_pAlter[i]) {
-				delete m_pAlter[i];
-				m_pAlter[i] = nullptr;
-			}
-		}
-		for (int i = 0; i < m_iAlterCnt; ++i) {
-			m_pAlter[i] = CAbstractFactory<CBossAlter>::Create(m_tInfo.vPos.x, m_tInfo.vPos.y);
-			m_pAlter[i]->Set_MaxHp(m_tStatus.iHp);
-			m_pAlter[i]->Set_Speed(m_fSpeed);
-			CObjMgr::Get_Instance()->Add_Object(OBJID::MONSTER, m_pAlter[i]);
-		}
-		dynamic_cast<CBossAlter*>(m_pAlter[0])->Set_GoalPos(200, m_tInfo.vPos.y + 100);
-		dynamic_cast<CBossAlter*>(m_pAlter[1])->Set_GoalPos(WINCX - 200, m_tInfo.vPos.y + 100);
-		AlterMode_On();
-		break;
-	case 2:
-		m_dwAttDelay = 1000;
-		m_tInfo.vDir.x = m_fSpeed;
-		for (int i = 0; i < 10; ++i) {
-			D3DXVECTOR3 vPos = { 100.f + rand() % (WINCX - 200), 100.f + rand() % (WINCY - 200),0.f };
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CDelayBullet>::Create(vPos.x, vPos.y));
-		}
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	}
+	m_iPattern = _iPattern;
+	m_bFirst = true;
+	m_iPhase = 0;
 }
 
 void CBoss01::Pattern00()
 {
+	if (m_bFirst) {
+		m_tStatus.iHp = m_tStatus.iMaxHp;
+		m_dwLastPatternChangeTime = GetTickCount();
+
+		m_bVisible = true;
+		m_tInfo.vPos = { 300.f, 100.f, 0.f };
+		m_dwAttDelay = 200;
+
+		m_bFirst = false;
+	}
+
 	int iCnt = 20 + rand() % 20;
 	int iAddAngle = rand() % 360;
 
@@ -308,30 +177,121 @@ void CBoss01::Pattern00()
 		}
 		m_dwLastAttTime = GetTickCount();
 	}
+
+	if (m_tStatus.iHp < m_tStatus.iMaxHp * 0.3f) {
+		Set_Pattern(m_iPattern + 1);
+	}
 }
 
 void CBoss01::Pattern01()
 {
-	// Alter Mode
+	if (m_bFirst)
+	{
+		AlterMode_On();
+		m_tStatus.iHp = m_tStatus.iMaxHp;
+		m_dwLastPatternChangeTime = GetTickCount();
+
+		for (int i = 0; i < m_iAlterCnt; ++i) {
+			if (m_pAlter[i])
+				m_pAlter[i]->Set_Dead();
+		}
+		for (int i = 0; i < m_iAlterCnt; ++i) {
+			m_pAlter[i] = CAbstractFactory<CBossAlter>::Create(m_tInfo.vPos.x, m_tInfo.vPos.y);
+			m_pAlter[i]->Set_MaxHp(m_tStatus.iHp);
+			m_pAlter[i]->Set_Speed(m_fSpeed);
+			CObjMgr::Get_Instance()->Add_Object(OBJID::MONSTER, m_pAlter[i]);
+		}
+		dynamic_cast<CBossAlter*>(m_pAlter[0])->Set_GoalPos(200, m_tInfo.vPos.y + 100);
+		dynamic_cast<CBossAlter*>(m_pAlter[1])->Set_GoalPos(WINCX - 200, m_tInfo.vPos.y + 100);
+
+		m_bFirst = false;
+	}
+
+	// Alter Mode Attack . . .
+
+	if (!m_bTransition && all_of(m_pAlter, m_pAlter + m_iAlterCnt, [](CObj* pObj) {
+		return dynamic_cast<CBossAlter*>(pObj)->Get_GrayMode();
+	})) {
+		for (int i = 0; i < m_iAlterCnt; ++i) {
+			dynamic_cast<CBossAlter*>(m_pAlter[i])->Set_GoalPos(m_tInfo.vPos.x, m_tInfo.vPos.y);
+		}
+		m_bTransition = true;
+	}
+
+	if (m_bTransition) {
+		switch (m_iPhase)
+		{
+		case 0:
+			if (all_of(m_pAlter, m_pAlter + m_iAlterCnt, [&](CObj* pObj) {
+				return abs(m_tInfo.vPos.x - pObj->Get_Info().vPos.x) < 10;
+			})) {
+				for (int i = 0; i < m_iAlterCnt; ++i) {
+					m_pAlter[i]->Set_Dead();
+				}
+				AlterMode_Off();
+				m_iPhase = 1;
+			}
+			break;
+		case 1:
+			m_tInfo.vPos.y -= m_fSpeed;
+			if (m_tInfo.vPos.y < -100) {
+				m_bTransition = false;
+				Set_Pattern(m_iPattern + 1);
+			}
+			break;
+		}
+	}
 }
 
 void CBoss01::Pattern02()
 {
-	m_tInfo.vPos.x += m_tInfo.vDir.x;
-	if (m_tInfo.vPos.x > WINCX - 100 || m_tInfo.vPos.x < 100)
-		m_tInfo.vDir.x *= -1;
+	if (m_bFirst)
+	{
+		m_bTransition = true;
+		m_tStatus.iHp = m_tStatus.iMaxHp;
+		m_dwLastPatternChangeTime = GetTickCount();
 
-	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
+		m_dwAttDelay = 500;
+		m_tInfo.vDir.x = m_fSpeed;
+		for (int i = 0; i < 10; ++i) {
+			D3DXVECTOR3 vPos = { 100.f + rand() % (WINCX - 200), 100.f + rand() % (WINCY - 200),0.f };
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CDelayBullet>::Create(vPos.x, vPos.y));
+		}
+
+		m_bFirst = false;
+	}
+
+	if (!m_bTransition &&
+		(m_dwLastAttTime + m_dwAttDelay < GetTickCount()))
 	{
 		D3DXVECTOR3 vPos = { 100.f + rand() % (WINCX - 200), 100.f + rand() % (WINCY - 100),0.f };
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CDelayBullet>::Create(vPos.x, vPos.y));
 
 		m_dwLastAttTime = GetTickCount();
 	}
+
+	if (!m_bTransition &&
+		m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
+		m_bTransition = true;
+	}
+
+	if (m_bTransition) {
+		switch (m_iPhase)
+		{
+		case 0:
+			m_tInfo.vPos.y += m_fSpeed;
+			if (m_tInfo.vPos.y > 100.f) {
+				m_bTransition = false;
+				Set_Pattern(m_iPattern + 1);
+			}
+			break;
+		}
+	}
 }
 
 void CBoss01::Pattern03()
 {
+
 }
 
 void CBoss01::Pattern04()

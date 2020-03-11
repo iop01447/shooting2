@@ -70,6 +70,12 @@ void CBossAlter::Render(HDC hDC)
 	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	m_tInfo.matWorld = matScale * matRotZ * matTrance;
 
+	HPEN hOldPen{ NULL };
+	if (m_bGrayMode) {
+		HPEN hPen = CreatePen(PS_SOLID, 1, RGB(125, 125, 125));
+		hOldPen = (HPEN)SelectObject(hDC, hPen);
+	}
+
 	for (int i = 0; i < 4; ++i)
 		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
 
@@ -79,6 +85,10 @@ void CBossAlter::Render(HDC hDC)
 		LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
 
 	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
+
+	if (m_bGrayMode) {
+		SelectObject(hDC, hOldPen);
+	}
 }
 
 void CBossAlter::Release()
@@ -88,18 +98,15 @@ void CBossAlter::Release()
 void CBossAlter::Move()
 {
 	m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-	if (abs(m_tInfo.vPos.x - m_vGoalPos.x) < m_fSpeed) {
+	if (abs(m_tInfo.vPos.x - m_vGoalPos.x) < 10) {
+		m_tInfo.vPos = m_vGoalPos;
 		m_bTransition = false;
-		if (m_bGrayMode) {
-			m_bFinish = true;
-		}
 	}
 }
 
 void CBossAlter::Attack()
 {
 	if (m_bGrayMode) return;
-	if (m_bFinish) return;
 
 	m_fAngle += m_fAddAngle;
 	if (m_fAngle > 30 || m_fAngle < -30)
@@ -128,7 +135,6 @@ void CBossAlter::Set_GoalPos(float _fX, float _fY)
 
 void CBossAlter::Check_GrayMode()
 {
-	if (m_bFinish) return;
 	if (m_bTransition) return;
 	if (m_bGrayMode &&
 		m_dwGrayTime + m_dwLastGrayOnTime < GetTickCount()) {
