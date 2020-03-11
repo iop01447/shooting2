@@ -20,8 +20,8 @@ void CSmallBullet::Initialize()
 	m_vCenter = m_tInfo.vPos;
 
 	m_fSpeed = 8.f;
-	m_fAngle = 0.f;
-	m_fRotDis = 30.f;
+	m_fAngle = 180.f;
+	m_fRotDis = 25.f;
 
 	m_iRenderIdx = 2;
 
