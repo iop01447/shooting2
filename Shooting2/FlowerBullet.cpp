@@ -28,7 +28,7 @@ void CFlowerBullet::Initialize()
 	D3DXVECTOR3 vOrigin = { 0.f, 0.f, 0.f };
 	D3DXVECTOR3 vPos = { 0.f, 0.f, 0.f };
 	D3DXVECTOR3 vDir = { 0.f, 0.f, 0.f };
-	for (float theta = 0; theta < 2 * 3.14; theta += 0.02) {
+	for (float theta = 0; theta < 2 * 3.14; theta += 0.02f) {
 		float fR = sin(fA / fB * theta);
 
 		vPos.x = fR * cos(theta);

@@ -162,10 +162,12 @@ void CMainGame::Stage_Scene()
 	case CMainGame::STAGE1:
 		m_listBoss->emplace_back(CAbstractFactory<CBoss00>::Create());
 		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
+		
 		break;
 	case CMainGame::STAGE2:
 		m_listBoss->emplace_back(CAbstractFactory<CBoss02>::Create());
 		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_listBoss->front());
 		break;
 	case CMainGame::STAGE3:
 		m_listBoss->emplace_back(CAbstractFactory<CBoss01>::Create());

@@ -35,6 +35,7 @@ public:
 public:
 	void Set_Dead() { m_bDead = true; }
 	virtual void Set_Damage(int _iAtt) { m_tStatus.iHp -= _iAtt; }
+
 	void Set_Pos(float _x, float _y) { m_tInfo.vPos = { _x, _y, 0.f }; };
 	void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
 	void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
@@ -43,7 +44,7 @@ public:
 	void Set_MaxHp(int _iMaxHp) { m_tStatus.iMaxHp = _iMaxHp; m_tStatus.iHp = _iMaxHp; }
 	void Set_Speed(float _ifSpeed) { m_fSpeed = _ifSpeed; }
 
-
+	void Set_INFO(INFO _tInfo) { m_tInfo = _tInfo; }
 protected:
 	INFO		m_tInfo;		// 객체들의 좌표와 크기를 저장한다.
 	RECT		m_tRect;

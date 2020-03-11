@@ -15,5 +15,6 @@ public:
 	virtual void Release() override;
 private:
 	D3DXVECTOR3 m_vOrigin;
+	CObj*				m_pBoss2;
 };
 

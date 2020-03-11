@@ -20,6 +20,8 @@ public:
 	void Render(); 
 	void Release(); 
 
+public:
+
 private:
 	void KeyCheck();
 	void Next_Scene();
