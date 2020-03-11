@@ -3,7 +3,7 @@
 
 
 CObj::CObj()
-	: m_bDead(false)
+	: m_bDead(false), m_eGroup(GROUPID::GAMEOBJECT), m_iRenderIdx(0)
 {
 	ZeroMemory(&m_tInfo, sizeof(m_tInfo));
 	ZeroMemory(&m_tRect, sizeof(m_tRect));

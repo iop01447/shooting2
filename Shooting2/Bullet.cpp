@@ -4,6 +4,7 @@
 
 CBullet::CBullet()
 {
+	m_eGroup = GROUPID::BULLET;
 }
 
 

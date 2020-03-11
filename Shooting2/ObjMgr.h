@@ -42,6 +42,7 @@ public:
 
 private:
 	list<CObj*>			m_listObj[OBJID::END];
+	list<CObj*>			m_listRender[GROUPID::END];
 	static CObjMgr*		m_pInstance;
 };
 

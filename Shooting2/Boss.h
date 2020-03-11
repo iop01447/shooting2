@@ -25,6 +25,13 @@ protected:
 		return pObj;
 	}
 
+	template <typename T>
+	CObj* Create_Bullet(const D3DXVECTOR3& _vPos, const D3DXVECTOR3& _vDir)
+	{
+		CObj* pObj = CAbstractFactory<T>::Create(_vPos, _vDir);
+		return pObj;
+	}
+
 	virtual void Move(){}
 	virtual void Attack(){}
 

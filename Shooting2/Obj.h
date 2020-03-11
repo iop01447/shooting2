@@ -28,6 +28,8 @@ public:
 	const int& Get_MaxHP() const { return m_tStatus.iMaxHp; }
 	const int& Get_Power() const { return m_tStatus.iPower; }
 
+	const GROUPID::ID Get_GroupID() const { return m_eGroup; }
+	const int& Get_RenderIdx() { return m_iRenderIdx; }
 
 public:
 	void Set_Dead() { m_bDead = true; }
@@ -50,6 +52,9 @@ protected:
 	bool		m_bDead;
 
 	float		m_fAngle;
+
+	int				m_iRenderIdx;
+	GROUPID::ID		m_eGroup;
 };
 
 #endif // !__OBJ_H__
