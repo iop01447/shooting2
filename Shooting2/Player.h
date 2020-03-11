@@ -22,6 +22,8 @@ public:
 	void KeyCheck();
 	void Boundary_Check();
 
+	const bool& Get_Evasive() const { return m_bEvasive; }
+
 private:
 	template <typename T>
 	CObj* Create_Bullet(float _x, float _y, float _fAngle = 0.f)
@@ -34,9 +36,15 @@ private:
 	D3DXVECTOR3 m_vPoint[4]; // Q
 	D3DXVECTOR3 m_vOrigin[4]; // P
 	D3DXVECTOR3 m_vPosin;
+	D3DXVECTOR3 m_vStart;
 
 	DWORD		m_dwLastAttTime;
 	DWORD		m_dwAttDelay;
+
+	bool		m_bEvasive;
+	float		m_fEvaAngle;
+
+	bool		m_bStart;
 };
 
 #endif

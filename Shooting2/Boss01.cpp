@@ -7,6 +7,7 @@
 #include "BossAlter.h"
 #include "Obj.h"
 #include "AbstractFactory.h"
+#include "FlowerBullet.h"
 
 
 CBoss01::CBoss01()
@@ -298,11 +299,31 @@ void CBoss01::Pattern02()
 
 void CBoss01::Pattern03()
 {
+	if (m_bFirst)
+	{
+		m_bTransition = false;
+		m_tStatus.iHp = m_tStatus.iMaxHp * 5;
+		m_dwLastPatternChangeTime = GetTickCount();
+		m_dwAttDelay = 2000;
 
+	//	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CFlowerBullet>::Create(WINCX/2, 100));
+
+		m_bFirst = false;
+	}
+
+	if (!m_bTransition &&
+		(m_dwLastAttTime + m_dwAttDelay < GetTickCount()))
+	{
+		D3DXVECTOR3 vPos = { 100.f + rand() % (WINCX - 200), 100.f, 0.f };
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CFlowerBullet>::Create(vPos.x, vPos.y));
+
+		m_dwLastAttTime = GetTickCount();
+	}
 }
 
 void CBoss01::Pattern04()
 {
+
 }
 
 void CBoss01::AlterMode_On()
