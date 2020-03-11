@@ -40,7 +40,7 @@ int CRazer::Update()
 
 	if (WINCY * 1.5f > m_tRect.bottom)
 	{
-		m_tRect.bottom += m_fSpeed;
+		m_tRect.bottom += (LONG)(m_fSpeed / 2);
 		CObj* pObj = Create_Bullet<CSmallBullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, m_fAngle);
 		pObj->Set_Target(this);
 		CObjMgr::Get_Instance()->Add_Object(OBJID::EFFECT, pObj);
@@ -48,7 +48,7 @@ int CRazer::Update()
 	}
 	else if (m_dwDeltaTime + m_dwAttTime < GetTickCount())
 	{
-		m_tRect.top += m_fSpeed / 2;
+		m_tRect.top += (LONG)(m_fSpeed / 2 - 2.5f);
 		dynamic_cast<CBoss00*>(m_pTarget)->Set_Razer();
 	}
 	else
