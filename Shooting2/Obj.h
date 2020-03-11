@@ -33,12 +33,14 @@ public:
 
 public:
 	void Set_Dead() { m_bDead = true; }
-	void Set_Damage(int _iAtt) { m_tStatus.iHp -= _iAtt; }
+	virtual void Set_Damage(int _iAtt) { m_tStatus.iHp -= _iAtt; }
 	void Set_Pos(float _x, float _y) { m_tInfo.vPos = { _x, _y, 0.f }; };
 	void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
 	void Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
 	void Set_Size(int _iCX, int _iCY) { m_tInfo.vSize = { float(_iCX), float(_iCY), 0.f };}
 	void Set_Dir(const D3DXVECTOR3& _vDir) { m_tInfo.vDir = _vDir; }
+	void Set_MaxHp(int _iMaxHp) { m_tStatus.iMaxHp = _iMaxHp; m_tStatus.iHp = _iMaxHp; }
+	void Set_Speed(float _ifSpeed) { m_fSpeed = _ifSpeed; }
 
 
 protected:

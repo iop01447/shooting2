@@ -4,6 +4,9 @@
 #include "ObjMgr.h"
 #include "DelayBullet.h"
 #include "KeyMgr.h"
+#include "BossAlter.h"
+#include "Obj.h"
+#include "AbstractFactory.h"
 
 
 CBoss01::CBoss01()
@@ -33,28 +36,40 @@ void CBoss01::Initialize()
 	m_vOrigin[3] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.5f, 0.f };
 
 	m_fAngle = 0.f;
-	m_fSpeed = 5.f;
+	m_fSpeed = 3.f;
 
 	m_dwLastAttTime = GetTickCount();
 
 	m_dwPatternTime = 5000;
 	m_dwLastPatternChangeTime = GetTickCount();
 
+	m_tStatus.iMaxHp = 20;
+	m_tStatus.iHp = m_tStatus.iMaxHp;
+	m_tStatus.iPower = 1;
+
+	m_iPattern = 0;
+
 	InitPattern();
 }
 
 int CBoss01::Update()
 {
-	if (m_bDead)
+	if (m_bDead) {
+		for (int i = 0; i < 50; ++i)
+			Die_Effect();
 		return OBJ_DEAD;
-	
+	}
+
 	KeyCheck();
 
-	Pattern();
+	if (m_bTransition)
+		Move();
+	else
+		Attack();
+
 	if(!m_bTest)
 		Change_Pattern();
 
-	Update_Matrix();
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -62,23 +77,102 @@ int CBoss01::Update()
 
 void CBoss01::Late_Update()
 {
+	if (0 >= m_tStatus.iHp)
+		m_bDead = true;
 }
 
 void CBoss01::Render(HDC hDC)
 {
+	if (m_bTest)
+		TextOut(hDC, 100, 100, L"Test Mode", lstrlen(L"Test Mode"));
+
+	if (m_bAlterMode) return;
+
+	D3DXMATRIX matScale, matRotZ, matTrance;
+	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+	m_tInfo.matWorld = matScale * matRotZ * matTrance;
+
+	for (int i = 0; i < 4; ++i)
+		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
 	MoveToEx(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y), nullptr);
 
 	for (int i = 1; i < 4; ++i)
 		LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
 
 	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
-
-	if (m_bTest)
-		TextOut(hDC, 100, 100, L"Test Mode", lstrlen(L"Test Mode"));
 }
 
 void CBoss01::Release()
 {
+}
+
+void CBoss01::Move()
+{
+	switch (m_iPattern)
+	{
+	case 0:
+		m_bTransition = false;
+		break;
+	case 1:
+		m_bTransition = false;
+		break;
+	case 2:
+	{
+		static int iPhase = 0;
+		switch (iPhase)
+		{
+		case 0:
+			if (all_of(m_pAlter, m_pAlter + m_iAlterCnt, [](CObj* pObj) {
+				assert(pObj != nullptr);
+				return dynamic_cast<CBossAlter*>(pObj)->Get_Finish();
+			})) {
+				for (int i = 0; i < m_iAlterCnt; ++i) {
+					m_pAlter[i]->Set_Dead();
+				}
+				AlterMode_Off();
+				iPhase = 1;
+			}
+			break;
+		case 1:
+			m_tInfo.vPos.y -= m_fSpeed;
+			if (m_tInfo.vPos.y < -100)
+				m_bTransition = false;
+			break;
+		}
+	}
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	default:
+		break;
+	}
+}
+
+void CBoss01::Attack()
+{
+	switch (m_iPattern)
+	{
+	case 0:
+		Pattern00();
+		break;
+	case 1:
+		Pattern01();
+		break;
+	case 2:
+		Pattern02();
+		break;
+	case 3:
+		Pattern03();
+		break;
+	case 4:
+		Pattern04();
+		break;
+	}
 }
 
 int CBoss01::wrap(int x, int low, int high)
@@ -105,53 +199,80 @@ void CBoss01::KeyCheck()
 	}
 }
 
-void CBoss01::Update_Matrix()
+void CBoss01::Change_Pattern()
 {
-	D3DXMATRIX matScale, matRotZ, matTrance;
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
-	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
-	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
-	m_tInfo.matWorld = matScale * matRotZ * matTrance;
+	//m_iPattern = (m_iPattern + 1) % m_iMaxPattern;
+	if (m_bTransition) return;
 
-	for (int i = 0; i < 4; ++i)
-		D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
-}
-
-void CBoss01::Pattern()
-{
 	switch (m_iPattern)
 	{
 	case 0:
-		Pattern00();
+		if (m_tStatus.iHp < m_tStatus.iMaxHp * 0.3f) {
+			++m_iPattern;
+			InitPattern();
+		}
 		break;
 	case 1:
-		Pattern01();
+		if (all_of(m_pAlter, m_pAlter + m_iAlterCnt, [](CObj* pObj) {
+			return dynamic_cast<CBossAlter*>(pObj)->Get_GrayMode();
+		})) {
+			++m_iPattern;
+			for (int i = 0; i < m_iAlterCnt; ++i) {
+				dynamic_cast<CBossAlter*>(m_pAlter[i])->Set_GoalPos(m_tInfo.vPos.x, m_tInfo.vPos.y);
+			}
+			InitPattern();
+		}
 		break;
 	case 2:
-		Pattern02();
+		if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
+			++m_iPattern;
+			InitPattern();
+		}
+		break;
+	case 3:
+		if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
+			++m_iPattern;
+			InitPattern();
+		}
+		break;
+	case 4:
+		if (m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {
+			--m_iPattern;
+			InitPattern();
+		}
+		break;
+	default:
 		break;
 	}
 }
 
-void CBoss01::Change_Pattern()
-{
-	if (m_dwLastPatternChangeTime + m_dwPatternTime > GetTickCount()) return;
-		
-	m_iPattern = (m_iPattern + 1) % m_iMaxPattern;
-	m_dwLastPatternChangeTime = GetTickCount();
-
-	InitPattern();
-}
-
 void CBoss01::InitPattern()
 {
+	m_bTransition = true;
+	m_tStatus.iHp = m_tStatus.iMaxHp;
+	m_dwLastPatternChangeTime = GetTickCount();
+
 	switch (m_iPattern)
 	{
-	case 0:
-		m_dwAttDelay = 20;
+	case 0: 
+		m_dwAttDelay = 200;
 		break;
 	case 1:
-		m_dwAttDelay = 200;
+		for (int i = 0; i < m_iAlterCnt; ++i) {
+			if (m_pAlter[i]) {
+				delete m_pAlter[i];
+				m_pAlter[i] = nullptr;
+			}
+		}
+		for (int i = 0; i < m_iAlterCnt; ++i) {
+			m_pAlter[i] = CAbstractFactory<CBossAlter>::Create(m_tInfo.vPos.x, m_tInfo.vPos.y);
+			m_pAlter[i]->Set_MaxHp(m_tStatus.iHp);
+			m_pAlter[i]->Set_Speed(m_fSpeed);
+			CObjMgr::Get_Instance()->Add_Object(OBJID::MONSTER, m_pAlter[i]);
+		}
+		dynamic_cast<CBossAlter*>(m_pAlter[0])->Set_GoalPos(200, m_tInfo.vPos.y + 100);
+		dynamic_cast<CBossAlter*>(m_pAlter[1])->Set_GoalPos(WINCX - 200, m_tInfo.vPos.y + 100);
+		AlterMode_On();
 		break;
 	case 2:
 		m_dwAttDelay = 1000;
@@ -161,29 +282,14 @@ void CBoss01::InitPattern()
 			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CDelayBullet>::Create(vPos.x, vPos.y));
 		}
 		break;
+	case 3:
+		break;
+	case 4:
+		break;
 	}
 }
 
 void CBoss01::Pattern00()
-{
-	static float fAddAngle = 3;
-	m_fAngle += fAddAngle;
-	if (m_fAngle > 30 || m_fAngle < -30)
-		fAddAngle *= -1;
-
-	D3DXMATRIX matRotZ;
-	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
-	D3DXVec3TransformCoord(&m_tInfo.vLook, &m_vLookOrigin, &matRotZ);
-
-	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
-	{
-		m_vPosin = m_tInfo.vPos + m_tInfo.vLook * m_tInfo.vSize.x;
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CBullet>::Create(m_vPosin, m_tInfo.vLook));
-		m_dwLastAttTime = GetTickCount();
-	}
-}
-
-void CBoss01::Pattern01()
 {
 	int iCnt = 20 + rand() % 20;
 	int iAddAngle = rand() % 360;
@@ -192,7 +298,7 @@ void CBoss01::Pattern01()
 	{
 		for (int i = 0; i < iCnt; ++i) {
 			D3DXMATRIX matRotZ;
-			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(iAddAngle + i * (360.f/iCnt)));
+			D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(iAddAngle + i * (360.f / iCnt)));
 			D3DXVECTOR3 vDir, vOrigin;
 			vOrigin = { 0, 1, 0 };
 			D3DXVec3TransformCoord(&vDir, &vOrigin, &matRotZ);
@@ -202,6 +308,11 @@ void CBoss01::Pattern01()
 		}
 		m_dwLastAttTime = GetTickCount();
 	}
+}
+
+void CBoss01::Pattern01()
+{
+	// Alter Mode
 }
 
 void CBoss01::Pattern02()
@@ -217,4 +328,24 @@ void CBoss01::Pattern02()
 
 		m_dwLastAttTime = GetTickCount();
 	}
+}
+
+void CBoss01::Pattern03()
+{
+}
+
+void CBoss01::Pattern04()
+{
+}
+
+void CBoss01::AlterMode_On()
+{
+	m_bAlterMode = true;
+	m_bVisible = false;
+}
+
+void CBoss01::AlterMode_Off()
+{
+	m_bAlterMode = false;
+	m_bVisible = true;
 }
