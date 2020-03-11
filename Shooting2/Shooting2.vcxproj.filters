@@ -79,9 +79,6 @@
     <Filter Include="소스 파일\01.Obj\03.Effect">
       <UniqueIdentifier>{82f1e0d6-5e73-4e0c-b1fc-9e9806b2a963}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\01.Obj\04.BossAlter">
-      <UniqueIdentifier>{a591f4db-975b-4276-88a4-aaba08544b7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\01.Razer">
       <UniqueIdentifier>{06d1dc51-7830-484e-8b61-bc1e1ce9a600}</UniqueIdentifier>
     </Filter>
@@ -91,8 +88,11 @@
     <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\03.Boss00Bullet2">
       <UniqueIdentifier>{d78fb04f-ba16-4e93-85f0-6caf6aa63bad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\04.BossAlter">
+      <UniqueIdentifier>{f5445cee-c8f8-41d5-ae38-0d7e0d46d7cd}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet">
-      <UniqueIdentifier>{12aa9ce1-841a-47bf-808c-28490ab42e47}</UniqueIdentifier>
+      <UniqueIdentifier>{a13d01ae-636d-4658-be4d-89a65651acd8}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\04.FlowerBullet">
       <UniqueIdentifier>{e4b4424a-d2c7-4339-b6b9-5c09781358cd}</UniqueIdentifier>
@@ -192,9 +192,6 @@
     <ClInclude Include="Boss02Bullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BossAlter.h">
-      <Filter>소스 파일\01.Obj\04.BossAlter</Filter>
-    </ClInclude>
     <ClInclude Include="Razer.h">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\01.Razer</Filter>
     </ClInclude>
@@ -207,8 +204,11 @@
     <ClInclude Include="Boss00Bullet2.h">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\03.Boss00Bullet2</Filter>
     </ClInclude>
-    <ClInclude Include="FlowerBullet.h">
-      <Filter>소스 파일\01.Obj\02.Bullet\04.FlowerBullet</Filter>
+    <ClInclude Include="BossAlter.h">
+      <Filter>소스 파일\01.Obj\04.BossAlter</Filter>
+    </ClInclude>
+    <ClInclude Include="RotBullet.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,8 +287,11 @@
     <ClCompile Include="Boss00Bullet2.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\03.Boss00Bullet2</Filter>
     </ClCompile>
-    <ClCompile Include="FlowerBullet.cpp">
-      <Filter>소스 파일\01.Obj\02.Bullet\04.FlowerBullet</Filter>
+    <ClCompile Include="BossAlter.cpp">
+      <Filter>소스 파일\01.Obj\04.BossAlter</Filter>
+    </ClCompile>
+    <ClCompile Include="RotBullet.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

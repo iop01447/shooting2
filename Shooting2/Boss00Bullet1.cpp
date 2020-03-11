@@ -28,10 +28,13 @@ int CBoss00Bullet1::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-
-	//m_tInfo.vPos.x += cosf(m_fAngle) * m_fSpeed;
-	//m_tInfo.vPos.y -= sinf(m_fAngle) * m_fSpeed;
+	if (0 == m_fAngle)
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+	else
+	{
+		m_tInfo.vPos.x += cosf(m_fAngle) * m_fSpeed;
+		m_tInfo.vPos.y -= sinf(m_fAngle) * m_fSpeed;
+	}
 
 	Update_Rect();
 

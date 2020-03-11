@@ -39,6 +39,9 @@ void CPlayer::Initialize()
 
 	m_dwAttDelay = 200;
 	m_dwLastAttTime = GetTickCount();
+
+	m_bEvasive = false;			// 회피중인지 체크용
+	m_fEvaAngle = 0.f;			// 회피 회전
 }
 
 int CPlayer::Update()
@@ -48,7 +51,18 @@ int CPlayer::Update()
 
 	D3DXMATRIX matScale, matRotZ, matTrance; 
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
-	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+	if (m_bEvasive)
+	{
+		m_fEvaAngle += 5.f;
+		D3DXMatrixRotationY(&matRotZ, D3DXToRadian(m_fEvaAngle));
+		if (180 <= m_fEvaAngle)
+		{
+			m_fEvaAngle = 0;
+			m_bEvasive = false;
+		}
+	}
+	else
+		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
 	D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f); 
 	m_tInfo.matWorld = matScale * matRotZ * matTrance;
 
@@ -108,13 +122,18 @@ void CPlayer::KeyCheck()
 		m_fAngle = 0.f;
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_SPACE))
+	if (!m_bEvasive && CKeyMgr::Get_Instance()->Key_Pressing(VK_SPACE))
 	{
 		if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 		{
 			CObjMgr::Get_Instance()->Add_Object(OBJID::BULLET, Create_Bullet<CPlayerBullet>(m_vPosin.x, m_vPosin.y));
 			m_dwLastAttTime = GetTickCount();
 		}
+	}
+
+	if (!m_bEvasive && CKeyMgr::Get_Instance()->Key_Down(VK_SHIFT))
+	{
+		m_bEvasive = true;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_ESCAPE))

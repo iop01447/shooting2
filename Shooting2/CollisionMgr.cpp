@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Obj.h"
-
+#include "Player.h"
 
 CCollisionMgr::CCollisionMgr()
 {
@@ -25,8 +25,19 @@ void CCollisionMgr::Collision_Rect(list<CObj*>& _Dst, list<CObj*>& _Src)
 
 			if (IntersectRect(&rc, &(Dst->Get_Rect()), &(Src->Get_Rect())))
 			{
-				Dst->Set_Damage(Src->Get_Power());
-				Src->Set_Dead();
+				if (dynamic_cast<CPlayer*>(Dst))
+				{
+					if (!static_cast<CPlayer*>(Dst)->Get_Evasive())
+					{
+						Dst->Set_Damage(Src->Get_Power());
+						Src->Set_Dead();
+					}
+				}
+				else
+				{
+					Dst->Set_Damage(Src->Get_Power());
+					Src->Set_Dead();
+				}
 			}
 		}
 	}

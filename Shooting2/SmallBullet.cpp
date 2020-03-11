@@ -53,9 +53,9 @@ int CSmallBullet::Update()
 
 void CSmallBullet::Late_Update()
 {
-	if (0 > m_tRect.top || 0 > m_tRect.left
-		|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
-		m_bDead = true;
+	//if (0 > m_tRect.top || 0 > m_tRect.left
+	//	|| WINCX < m_tRect.right || WINCY < m_tRect.bottom)
+	//	m_bDead = true;
 }
 
 void CSmallBullet::Render(HDC hDC)

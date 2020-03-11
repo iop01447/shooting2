@@ -48,6 +48,7 @@ void CBoss02::Initialize()
 	m_eState = IDLE;
 	m_ePhase = PHASE1;
 	m_bDir = true;
+	m_vDir = {1, 1, 0};
 }
 
 int CBoss02::Update()
@@ -158,6 +159,8 @@ int CBoss02::Update()
 void CBoss02::Late_Update()
 {
 	Update_Rect();
+	if (0 >= m_tStatus.iHp)
+		m_bDead = true;
 }
 
 void CBoss02::Render(HDC hDC)
@@ -229,7 +232,7 @@ void CBoss02::Move()
 {
 	if (361 <= m_fAngle)
 		m_fAngle = 0.f;
-
+	
 	if (m_dwLastAttTime + m_dwAttDelay < GetTickCount())
 	{
 		if (IDLE == m_eState)
@@ -237,14 +240,23 @@ void CBoss02::Move()
 		Attack();
 		return;
 	}
-
-	if (0 != m_fAngle)
+	if (m_tRect.left <= 0 || m_tRect.right >= WINCX)
 	{
-		if (180 > m_fAngle)
-			m_fAngle -= 3.f;
-		else
-			m_fAngle += 3.f;
+		m_vDir.x *= -1;
 	}
+	if (m_tRect.bottom >= WINCY/2 || m_tRect.top <= 0)
+	{
+		m_vDir.y *= -1;
+	}
+	m_tInfo.vPos += m_vDir;
+	
+	//if (0 != m_fAngle)
+	//{
+	//	if (180 > m_fAngle)
+	//		m_fAngle -= 3.f;
+	//	else
+	//		m_fAngle += 3.f;
+	//}
 
 	if (START == m_eState)
 	{
@@ -255,57 +267,57 @@ void CBoss02::Move()
 
 void CBoss02::Attack()
 {
-	Attack5();
 	if (m_bDir)
 		m_fAngle += 3.f;
 	else
 		m_fAngle -= 3.f;
-	//if (ATTACK == m_eState)
-	//{
-	//	int r = rand() % 5;
+	
+	if (ATTACK == m_eState)
+	{
+		int r = rand() % 5;
 
-	//	switch (r)
-	//	{
-	//	case 0:
-	//		m_eState = ATTACK1;
-	//		break;
-	//	case 1:
-	//		m_eState = ATTACK2;
-	//		break;
-	//	case 2:
-	//		m_eState = ATTACK3;
-	//		break;
-	//	case 3:
-	//		m_eState = ATTACK4;
-	//		break;
-	//	case 4:
-	//		//m_eState = ATTACK5;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
+		switch (r)
+		{
+		case 0:
+			m_eState = ATTACK1;
+			break;
+		case 1:
+			m_eState = ATTACK2;
+			break;
+		case 2:
+			m_eState = ATTACK3;
+			break;
+		case 3:
+			m_eState = ATTACK4;
+			break;
+		case 4:
+			m_eState = ATTACK5;
+			break;
+		default:
+			break;
+		}
+	}
 
-	//switch (m_eState)
-	//{
-	//case CBoss02::ATTACK1:
-	//	Attack1();
-	//	break;
-	//case CBoss02::ATTACK2:
-	//	Attack2();
-	//	break;
-	//case CBoss02::ATTACK3:
-	//	Attack3();
-	//	break;
-	//case CBoss02::ATTACK4:
-	//	Attack4();
-	//	break;
-	//case CBoss02::ATTACK5:
-	//	//Attack5();
-	//	break;
-	//default:
-	//	break;
-	//}
+	switch (m_eState)
+	{
+	case CBoss02::ATTACK1:
+		Attack1();
+		break;
+	case CBoss02::ATTACK2:
+		Attack2();
+		break;
+	case CBoss02::ATTACK3:
+		Attack3();
+		break;
+	case CBoss02::ATTACK4:
+		Attack4();
+		break;
+	case CBoss02::ATTACK5:
+		Attack5();
+		break;
+	default:
+		break;
+	}
 
 	//if (m_bDir)
 	//	m_fAngle += 3.f;
@@ -505,8 +517,14 @@ void CBoss02::Attack4()
 		fAngle *= -1.f;
 	if (m_dwBulletTime2 + 100 < GetTickCount())
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle+0.1f));
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle-0.1f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle + 0.1f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle - 0.1f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle + 0.2f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle - 0.2f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle + 0.3f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle - 0.3f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle + 0.4f));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CBoss02Bullet>(m_tInfo.vPos.x, m_tInfo.vPos.y, fAngle - 0.4f));
 		m_dwBulletTime2 = GetTickCount();
 	}
 	if (m_fAngle >= 360 || m_fAngle <= -360)
@@ -527,9 +545,9 @@ void CBoss02::Attack5()
 		vDir[i] = m_vPoint[i] - m_tInfo.vPos;
 		D3DXVec3Normalize(&vDir[i], &vDir[i]);
 	}
-	
-	
-	
+
+
+
 
 	// acosf 0~ ¤Ð
 	//float fAngle1 = asinf(fDot);
@@ -539,8 +557,10 @@ void CBoss02::Attack5()
 	//	//fAngle1 *= -1.f;
 	//}
 	for (size_t i = 0; i < 6; i++)
-		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, CAbstractFactory<CRotBullet>::Create(m_vPoint[i], vDir[i]));
-	
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[i], vDir[i]));
+		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRotBullet>(m_vPoint[i], vDir[i]));
+	}
 	if (m_fAngle >= 360 || m_fAngle <= -360)
 	{
 		m_dwLastAttTime = GetTickCount();
