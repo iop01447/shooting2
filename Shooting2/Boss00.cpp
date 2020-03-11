@@ -54,6 +54,7 @@ void CBoss00::Initialize()
 	m_eState = IDLE;
 	m_eDir = DIR_END;
 	m_iCount = 0;
+	m_iPatton = -1;
 
 	m_tStatus.iMaxHp = 100;
 	m_tStatus.iHp = m_tStatus.iMaxHp;
@@ -70,8 +71,37 @@ int CBoss00::Update()
 		return OBJ_DEAD;
 	}
 
-	Move();
+	if (m_bStart)
+	{
+		if (m_dwStartTime + (m_dwStartDelay / 2) < GetTickCount())
+			m_bStart = false;
 
+		D3DXMATRIX matScale, matRotZ, matTrance;
+		D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+		D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+		m_tInfo.matWorld = matScale * matRotZ * matTrance;
+
+		for (int i = 0; i < 4; ++i)
+			D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
+		return OBJ_NOEVENT;
+	}
+
+	Move();
+	Update_Rect();
+
+	return OBJ_NOEVENT;
+}
+
+void CBoss00::Late_Update()
+{
+	if (0 >= m_tStatus.iHp)
+		m_bDead = true;
+}
+
+void CBoss00::Render(HDC hDC)
+{
 	D3DXMATRIX matScale, matRotZ, matTrance;
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
@@ -88,29 +118,10 @@ int CBoss00::Update()
 		for (int j = 0; j < 4; ++j)
 			D3DXVec3TransformCoord(&m_vRazer[i][j], &m_vOriginRazer[i][j], &m_tInfo.matWorld);
 
-	Update_Rect();
-
-	return OBJ_NOEVENT;
-}
-
-void CBoss00::Late_Update()
-{
-	if (0 >= m_tStatus.iHp)
-		m_bDead = true;
-}
-
-void CBoss00::Render(HDC hDC)
-{
 	MoveToEx(hDC, int(m_vPoint[3].x), int(m_vPoint[3].y), nullptr);
 
 	for (int i = 0; i < 4; ++i)
 		LineTo(hDC, int(m_vPoint[i].x), int(m_vPoint[i].y));
-
-	//for (int i = 0; i < 3; ++i)
-	//{
-	//	MoveToEx(hDC, int(m_tInfo.vPos.x), int(m_tInfo.vPos.y), nullptr);
-	//	LineTo(hDC, int(m_vPosin[i].x), int(m_vPosin[i].y));
-	//}
 
 	if (ATTACK3 == m_eState)
 	{
@@ -211,9 +222,11 @@ void CBoss00::Attack()
 {
 	if (ATTACK == m_eState)
 	{
-		int r = rand() % 3;
-		r = 1;
-		switch (r)
+		++m_iPatton;
+		if (2 < m_iPatton)
+			m_iPatton = 0;
+
+		switch (m_iPatton)
 		{
 		case 0:
 			m_eState = ATTACK1;
@@ -227,7 +240,6 @@ void CBoss00::Attack()
 		default:
 			break;
 		}
-		m_iCount = 0;
 	}
 	
 	switch (m_eState)
@@ -327,7 +339,7 @@ void CBoss00::Attack2()
 		}
 	}
 
-	if (m_dwLastAttTime + (m_dwAttTime * 2) < GetTickCount())
+	if (m_dwLastAttTime + (m_dwAttTime * 1.7f) < GetTickCount())
 	{
 		m_dwLastAttTime = GetTickCount();
 		m_eState = START;

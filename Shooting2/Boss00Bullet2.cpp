@@ -34,7 +34,7 @@ void CBoss00Bullet2::Initialize()
 	m_vOrigin[6] = { -m_tInfo.vSize.x * 0.5f, m_tInfo.vSize.y * 0.25f, 0.f };
 	m_vOrigin[7] = { -m_tInfo.vSize.x * 0.5f, -m_tInfo.vSize.y * 0.25f, 0.f };
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 7.f;
 	m_fAngle = 0.f;
 
 	m_iRand = rand() % 2;

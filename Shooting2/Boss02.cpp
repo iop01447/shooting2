@@ -55,6 +55,15 @@ int CBoss02::Update()
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+
+	if (m_bStart)
+	{
+		if (m_dwStartTime + (m_dwStartDelay * 2) < GetTickCount())
+			m_bStart = false;
+
+		return OBJ_NOEVENT;
+	}
+
 	//Ç®ÇÇ
 	if (80 < m_tStatus.iHp)
 		m_ePhase = PHASE1;

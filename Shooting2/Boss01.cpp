@@ -65,6 +65,23 @@ int CBoss01::Update()
 		return OBJ_DEAD;
 	}
 
+	if (m_bStart)
+	{
+		if (m_dwStartTime + (m_dwStartDelay * 2) < GetTickCount())
+			m_bStart = false;
+
+		D3DXMATRIX matScale, matRotZ, matTrance;
+		D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+		D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+		m_tInfo.matWorld = matScale * matRotZ * matTrance;
+
+		for (int i = 0; i < 4; ++i)
+			D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
+		return OBJ_NOEVENT;
+	}
+
 	KeyCheck();
 	Pattern();
 	Update_Rect();

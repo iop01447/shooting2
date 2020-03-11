@@ -23,6 +23,10 @@ public:
 	void Boundary_Check();
 
 	const bool& Get_Evasive() const { return m_bEvasive; }
+	const bool& Get_Start() const { return m_bStart; }
+	const bool& Get_End() const { return m_bEnd; }
+
+	void Set_End() { m_bEnd = true; }
 
 private:
 	template <typename T>
@@ -45,6 +49,7 @@ private:
 	float		m_fEvaAngle;
 
 	bool		m_bStart;
+	bool		m_bEnd;
 };
 
 #endif

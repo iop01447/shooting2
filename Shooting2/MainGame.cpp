@@ -106,6 +106,9 @@ void CMainGame::KeyCheck()
 
 void CMainGame::Next_Scene()
 {
+	if (!Start_Scene())
+		return;
+
 	switch (m_eScene)
 	{
 	case CMainGame::START:
@@ -131,9 +134,25 @@ void CMainGame::Next_Scene()
 	Stage_Scene();
 }
 
-void CMainGame::Start_Scene()
+bool CMainGame::Start_Scene()
 {
+	CObj* pPlayer = CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER);
+	if (pPlayer)
+	{
+		if (!static_cast<CPlayer*>(pPlayer)->Get_End() && !static_cast<CPlayer*>(pPlayer)->Get_Start())
+		{
+			static_cast<CPlayer*>(pPlayer)->Set_End();
+			return false;
+		}
+		if (!static_cast<CPlayer*>(pPlayer)->Get_End() && static_cast<CPlayer*>(pPlayer)->Get_Start())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
 
+	return true;
 }
 
 void CMainGame::Stage_Scene()
@@ -145,11 +164,11 @@ void CMainGame::Stage_Scene()
 		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		break;
 	case CMainGame::STAGE2:
-		m_listBoss->emplace_back(CAbstractFactory<CBoss01>::Create());
+		m_listBoss->emplace_back(CAbstractFactory<CBoss02>::Create());
 		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		break;
 	case CMainGame::STAGE3:
-		m_listBoss->emplace_back(CAbstractFactory<CBoss02>::Create());
+		m_listBoss->emplace_back(CAbstractFactory<CBoss01>::Create());
 		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		break;
 	case CMainGame::END:

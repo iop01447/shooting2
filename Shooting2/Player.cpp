@@ -19,7 +19,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo.vPos = { 300.f, WINCY + 200, 0.f };
+	m_tInfo.vPos = { 300.f, (float)(WINCY + 100), 0.f };
 	m_tInfo.vSize = { 10.f, 10.f, 0.f };
 	m_tInfo.vDir = { 1.f, -1.f, 0.f };
 	m_tInfo.vLook = { 1.f, 0.f, 0.f }; 
@@ -45,17 +45,44 @@ void CPlayer::Initialize()
 	m_bEvasive = false;			// 회피중인지 체크용
 	m_fEvaAngle = 0.f;			// 회피 회전
 	m_bStart = true;
+	m_bEnd = false;
 }
 
 int CPlayer::Update()
 {
 	if (m_bStart)
 	{
+		m_fAngle = 0.f;
 		m_tInfo.vPos.y += m_tInfo.vDir.y * (m_fSpeed / 2);
 
 		if (m_tInfo.vPos.y < m_vStart.y)
 			m_bStart = false;
 
+		D3DXMATRIX matScale, matRotZ, matTrance;
+		D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+		D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+		m_tInfo.matWorld = matScale * matRotZ * matTrance;
+
+		m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2) - 15.f, 0.f };
+
+		for (int i = 0; i < 4; ++i)
+			D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
+		return OBJ_NOEVENT;
+	}
+
+	if (m_bEnd)
+	{
+		m_fAngle = 0.f;
+		m_tInfo.vPos.y += m_tInfo.vDir.y * (m_fSpeed / 2);
+
+		if (m_tInfo.vPos.y < -100)
+		{
+			m_bEnd = false;
+			m_tInfo.vPos = { 300.f, (float)(WINCY + 100), 0.f };
+			m_bStart = true;
+		}
 		D3DXMATRIX matScale, matRotZ, matTrance;
 		D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
@@ -114,7 +141,7 @@ void CPlayer::Render(HDC hDC)
 	LineTo(hDC, int(m_vPoint[0].x), int(m_vPoint[0].y));
 
 #ifdef _DEBUG
-	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 #endif
 }
 

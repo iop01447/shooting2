@@ -57,6 +57,7 @@ private:
 	DWORD			m_dwAttDelay;
 	DWORD			m_dwAttTime;
 
+	int				m_iPatton;
 	int				m_iCount;
 
 	list<CObj*>*	m_listBullet;

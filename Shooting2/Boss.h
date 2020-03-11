@@ -6,6 +6,11 @@
 #include "Obj.h"
 class CBoss : public CObj
 {
+protected:
+	bool		m_bStart;
+	DWORD		m_dwStartTime;
+	DWORD		m_dwStartDelay;
+
 public:
 	CBoss();
 	virtual ~CBoss();

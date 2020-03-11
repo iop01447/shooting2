@@ -4,6 +4,7 @@
 #include "ObjMgr.h"
 
 CBoss::CBoss()
+	: m_bStart(true), m_dwStartDelay(1000), m_dwStartTime(GetTickCount())
 {
 }
 

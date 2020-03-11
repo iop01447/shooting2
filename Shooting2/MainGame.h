@@ -23,7 +23,7 @@ public:
 private:
 	void KeyCheck();
 	void Next_Scene();
-	void Start_Scene();
+	bool Start_Scene();
 	void Stage_Scene();
 
 private:
