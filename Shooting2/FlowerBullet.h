@@ -1,25 +1,19 @@
 #pragma once
-#include "Obj.h"
-class CBullet :
-	public CObj
+#include "Bullet.h"
+class CFlowerBullet :
+	public CBullet
 {
 public:
-	CBullet();
-	virtual ~CBullet();
+	CFlowerBullet();
+	virtual ~CFlowerBullet();
 
-	// CObj을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual int Update() override;
 	virtual void Late_Update() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
 
-	void Die_Effect();
-
-public:
-	void Set_UnDead(bool _bUnDead) { bUnDead = _bUnDead; }
-
 private:
-	bool bUnDead{ false };
+	map<CObj*, D3DXVECTOR3> m_mapBullet;
 };
 
