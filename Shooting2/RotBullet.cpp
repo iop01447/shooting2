@@ -19,9 +19,9 @@ void CRotBullet::Initialize()
 	m_fSpeed = 5.f;
 
 	m_fRotAngle = 0.f;
-	m_fRotSpeed = 30.f;
+	m_fRotSpeed = 90.f;
 	m_fRotDis = 10.f;
-
+	m_bDir = true;
 	Update_Rect();
 
 	m_tCenter= m_tInfo.vPos;
@@ -39,10 +39,18 @@ int CRotBullet::Update()
 
 	m_fRotAngle += m_fRotSpeed;
 
-	m_tInfo.vPos.x = m_tCenter.x + cosf(m_fRotAngle * PI / 180.f) * m_fRotDis;
-	m_tInfo.vPos.y = m_tCenter.y - sinf(m_fRotAngle * PI / 180.f) * m_fRotDis;
-
-
+	if (m_bDir)
+	{
+		m_tInfo.vPos.x = m_tCenter.x + cosf(m_fRotAngle * PI / 180.f) * m_fRotDis;
+		m_tInfo.vPos.y = m_tCenter.y - sinf(m_fRotAngle * PI / 180.f) * m_fRotDis;
+		m_bDir = !m_bDir;
+	}
+	else
+	{
+		m_tInfo.vPos.x = m_tCenter.x - sinf (m_fRotAngle * PI / 180.f) * m_fRotDis;
+		m_tInfo.vPos.y = m_tCenter.y + cosf(m_fRotAngle * PI / 180.f) * m_fRotDis;
+		m_bDir = !m_bDir;
+	}
 
 	Update_Rect();
 

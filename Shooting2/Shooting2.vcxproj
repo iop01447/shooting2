@@ -181,6 +181,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="Razer.h" />
+    <ClInclude Include="RazerBullet.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RotBullet.h" />
     <ClInclude Include="Shooting2.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="RazerBullet.cpp" />
     <ClCompile Include="RotBullet.cpp" />
     <ClCompile Include="Razer.cpp" />
     <ClCompile Include="Shooting2.cpp" />
