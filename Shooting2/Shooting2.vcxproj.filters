@@ -79,9 +79,6 @@
     <Filter Include="소스 파일\01.Obj\03.Effect">
       <UniqueIdentifier>{82f1e0d6-5e73-4e0c-b1fc-9e9806b2a963}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\01.Obj\04.BossAlter">
-      <UniqueIdentifier>{a591f4db-975b-4276-88a4-aaba08544b7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\01.Razer">
       <UniqueIdentifier>{06d1dc51-7830-484e-8b61-bc1e1ce9a600}</UniqueIdentifier>
     </Filter>
@@ -188,9 +185,6 @@
     </ClInclude>
     <ClInclude Include="Boss02Bullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="BossAlter.h">
-      <Filter>소스 파일\01.Obj\04.BossAlter</Filter>
     </ClInclude>
     <ClInclude Include="Razer.h">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\01.Razer</Filter>
