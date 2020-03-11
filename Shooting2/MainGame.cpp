@@ -32,9 +32,14 @@ void CMainGame::Initialize()
 
 	CObjMgr::Get_Instance()->Add_Object(OBJID::PLAYER, CAbstractFactory<CPlayer>::Create(300.f, 700.f));
 
-	m_pBoss = CAbstractFactory<CBoss00>::Create();
-	m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
-	CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
+	//m_pBoss = CAbstractFactory<CBoss00>::Create();
+	//m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
+	//CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
+
+	m_listBoss = CObjMgr::Get_Instance()->Get_List(OBJID::BOSS);
+
+	m_eScene = START;
+	m_iBossCount = 0;
 }
 
 void CMainGame::Update()
@@ -42,6 +47,9 @@ void CMainGame::Update()
 	KeyCheck();
 	CObjMgr::Get_Instance()->Update();
 	CKeyMgr::Get_Instance()->Key_Update();
+
+	if (m_listBoss->empty())
+		Next_Scene();
 }
 
 void CMainGame::LateUpdate()
@@ -93,5 +101,61 @@ void CMainGame::KeyCheck()
 		m_pBoss = CAbstractFactory<CBoss02>::Create();
 		m_pBoss->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
 		CObjMgr::Get_Instance()->Add_Object(OBJID::BOSS, m_pBoss);
+	}
+}
+
+void CMainGame::Next_Scene()
+{
+	switch (m_eScene)
+	{
+	case CMainGame::START:
+		m_eScene = (SCENE)m_iBossCount;
+		++m_iBossCount;
+		break;
+	case CMainGame::STAGE1:
+		m_eScene = START;
+		break;
+	case CMainGame::STAGE2:
+		m_eScene = START;
+		break;
+	case CMainGame::STAGE3:
+		m_eScene = START;
+		break;
+	case CMainGame::END:
+		DestroyWindow(g_hWnd);
+		break;
+	default:
+		break;
+	}
+
+	Stage_Scene();
+}
+
+void CMainGame::Start_Scene()
+{
+
+}
+
+void CMainGame::Stage_Scene()
+{
+	switch (m_eScene)
+	{
+	case CMainGame::STAGE1:
+		m_listBoss->emplace_back(CAbstractFactory<CBoss00>::Create());
+		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
+		break;
+	case CMainGame::STAGE2:
+		m_listBoss->emplace_back(CAbstractFactory<CBoss01>::Create());
+		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
+		break;
+	case CMainGame::STAGE3:
+		m_listBoss->emplace_back(CAbstractFactory<CBoss02>::Create());
+		m_listBoss->front()->Set_Target(CObjMgr::Get_Instance()->Get_Obj(OBJID::PLAYER));
+		break;
+	case CMainGame::END:
+		DestroyWindow(g_hWnd);
+		break;
+	default:
+		break;
 	}
 }

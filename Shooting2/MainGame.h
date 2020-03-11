@@ -10,6 +10,9 @@ public:
 	CMainGame();
 	~CMainGame();
 
+private:
+	enum SCENE { START, STAGE1, STAGE2, STAGE3, END };
+
 public:
 	void Initialize(); 
 	void Update(); 
@@ -19,10 +22,18 @@ public:
 
 private:
 	void KeyCheck();
+	void Next_Scene();
+	void Start_Scene();
+	void Stage_Scene();
 
 private:
-	HDC m_hDC; 
-	CObj* m_pBoss;
+	list<CObj*>*	m_listBoss;
+
+	HDC				m_hDC;
+	CObj*			m_pBoss;
+
+	SCENE			m_eScene;
+	int				m_iBossCount;
 };
 
 

@@ -19,11 +19,13 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo.vPos = { 300.f, 700.f, 0.f };
+	m_tInfo.vPos = { 300.f, WINCY + 200, 0.f };
 	m_tInfo.vSize = { 10.f, 10.f, 0.f };
 	m_tInfo.vDir = { 1.f, -1.f, 0.f };
 	m_tInfo.vLook = { 1.f, 0.f, 0.f }; 
 	m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2) - 15.f, 0.f };
+
+	m_vStart = { 300.f, 700.f, 0.f };
 
 	m_vOrigin[0] = { -3.f, 2.f, 0.f };
 	m_vOrigin[1] = { 0.f, -1.f, 0.f };
@@ -42,10 +44,32 @@ void CPlayer::Initialize()
 
 	m_bEvasive = false;			// 회피중인지 체크용
 	m_fEvaAngle = 0.f;			// 회피 회전
+	m_bStart = true;
 }
 
 int CPlayer::Update()
 {
+	if (m_bStart)
+	{
+		m_tInfo.vPos.y += m_tInfo.vDir.y * (m_fSpeed / 2);
+
+		if (m_tInfo.vPos.y < m_vStart.y)
+			m_bStart = false;
+
+		D3DXMATRIX matScale, matRotZ, matTrance;
+		D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
+		D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+		D3DXMatrixTranslation(&matTrance, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+		m_tInfo.matWorld = matScale * matRotZ * matTrance;
+
+		m_vPosin = { m_tInfo.vPos.x, (m_tInfo.vPos.y - m_tInfo.vSize.y / 2) - 15.f, 0.f };
+
+		for (int i = 0; i < 4; ++i)
+			D3DXVec3TransformCoord(&m_vPoint[i], &m_vOrigin[i], &m_tInfo.matWorld);
+
+		return OBJ_NOEVENT;
+	}
+
 	KeyCheck(); 
 	Boundary_Check();
 

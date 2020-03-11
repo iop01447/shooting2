@@ -55,7 +55,7 @@ void CBoss00::Initialize()
 	m_eDir = DIR_END;
 	m_iCount = 0;
 
-	m_tStatus.iMaxHp = 30;
+	m_tStatus.iMaxHp = 100;
 	m_tStatus.iHp = m_tStatus.iMaxHp;
 
 	m_listBullet = CObjMgr::Get_Instance()->Get_List(OBJID::BULLET);
