@@ -459,13 +459,13 @@ void CBoss02::Attack3()
 	{
 		if (m_ePhase == PHASE1)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0], m_fAngle));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0]));
 		}
 		else if (m_ePhase == PHASE2)
 		{	
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0],m_fAngle));
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[1], vDir[1], m_fAngle));
-			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[2], vDir[2], m_fAngle));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[0], vDir[0]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[1], vDir[1]));
+			CObjMgr::Get_Instance()->Add_Object(OBJID::BOSSBULLET, Create_Bullet<CRazerBullet>(m_vPoint[2], vDir[2]));
 		}
 		else if (m_ePhase == PHASE3)
 		{
