@@ -14,8 +14,10 @@ CBoss00Bullet1::~CBoss00Bullet1()
 
 void CBoss00Bullet1::Initialize()
 {
-	m_tInfo.vSize.x = 20.f;
-	m_tInfo.vSize.y = 20.f;
+	m_tInfo.vSize = { 20.f, 20.f, 0.f };
+	m_tInfo.vDir = { 0.f, 1.f, 0.f };
+	m_tInfo.vLook = { 0.f, 1.f, 0.f };
+
 	m_fSpeed = 5.f;
 
 	Update_Rect();
@@ -26,8 +28,10 @@ int CBoss00Bullet1::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.vPos.x += cosf(m_fAngle) * m_fSpeed;
-	m_tInfo.vPos.y -= sinf(m_fAngle) * m_fSpeed;
+	m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
+
+	//m_tInfo.vPos.x += cosf(m_fAngle) * m_fSpeed;
+	//m_tInfo.vPos.y -= sinf(m_fAngle) * m_fSpeed;
 
 	Update_Rect();
 

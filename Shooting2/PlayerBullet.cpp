@@ -9,6 +9,7 @@ CPlayerBullet::CPlayerBullet()
 
 CPlayerBullet::~CPlayerBullet()
 {
+	Release();
 }
 
 void CPlayerBullet::Initialize()

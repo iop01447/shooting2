@@ -29,6 +29,9 @@ public:
 	const int& Get_Power() const { return m_tStatus.iPower; }
 	bool Get_Visible() { return m_bVisible; }
 
+	const GROUPID::ID Get_GroupID() const { return m_eGroup; }
+	const int& Get_RenderIdx() { return m_iRenderIdx; }
+
 public:
 	void Set_Dead() { m_bDead = true; }
 	virtual void Set_Damage(int _iAtt) { m_tStatus.iHp -= _iAtt; }
@@ -54,6 +57,9 @@ protected:
 	float		m_fAngle;
 	bool		m_bVisible{ true };
 
+
+	int				m_iRenderIdx;
+	GROUPID::ID		m_eGroup;
 };
 
 #endif // !__OBJ_H__

@@ -13,4 +13,10 @@ void Safe_Delete(T& _obj)
 	}
 }
 
+template <typename T>
+bool ObjectSortIdx(T _Dst, T _Src)
+{
+	return _Dst->Get_RenderIdx() < _Src->Get_RenderIdx();
+}
+
 #endif // !__FUNCTION_H__

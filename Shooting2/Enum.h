@@ -13,4 +13,9 @@ namespace OBJID
 	enum ID { BOSS, MONSTER, BOSSBULLET, BULLET, MOUSE, PLAYER, EFFECT, SKILL, DAMAGE, UI, END };
 }
 
+namespace GROUPID
+{
+	enum ID { BACKGROUND, GAMEOBJECT, BULLET, EFFECT, END };
+}
+
 #endif // !__ENUM_H__

@@ -23,9 +23,6 @@ void CObjMgr::Add_Object(OBJID::ID _eID, CObj * _pObj)
 void CObjMgr::Add_Object(OBJID::ID _eID, CObj * _pObj, int _iCX, int _iCY)
 {
 	m_listObj[_eID].emplace_back(_pObj);
-	//m_listObj[_eID].back()->Set_Size(_iCX, _iCY);
-	
-	//D3DXMatrixScaling(&matScale, 1.f, 1.f, 0.f);
 }
 
 void CObjMgr::Update()
@@ -58,6 +55,9 @@ void CObjMgr::Late_Update()
 			pObj->Late_Update();
 			if (m_listObj[i].empty())
 				break;
+
+			GROUPID::ID eID = pObj->Get_GroupID();
+			m_listRender[eID].emplace_back(pObj);
 		}
 	}
 
@@ -70,10 +70,15 @@ void CObjMgr::Late_Update()
 
 void CObjMgr::Render(HDC _DC)
 {
-	for (int i = 0; i < OBJID::END; ++i)
+	for (int i = 0; i < GROUPID::END; ++i)
 	{
-		for (auto& pObj : m_listObj[i])
+		if (i == GROUPID::BULLET)
+			m_listRender[i].sort(ObjectSortIdx<CObj*>);
+
+		for (auto& pObj : m_listRender[i])
 			pObj->Render(_DC);
+
+		m_listRender[i].clear();
 	}
 }
 
