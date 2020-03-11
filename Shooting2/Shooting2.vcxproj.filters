@@ -198,8 +198,11 @@
     <ClInclude Include="SmallBullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\02.SmallBullet</Filter>
     </ClInclude>
-    <ClInclude Include="Boss00Bullet2.h">
+    <ClInclude Include="BossAlter.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss00Bullet2.h">
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\03.Boss00Bullet2</Filter>
     </ClInclude>
     <ClInclude Include="RotBullet.h">
       <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet</Filter>
@@ -266,17 +269,17 @@
     <ClCompile Include="Boss02Bullet.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BossAlter.cpp">
-      <Filter>소스 파일\01.Obj\04.BossAlter</Filter>
-    </ClCompile>
     <ClCompile Include="Razer.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\01.Razer</Filter>
     </ClCompile>
     <ClCompile Include="SmallBullet.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\02.SmallBullet</Filter>
     </ClCompile>
-    <ClCompile Include="Boss00Bullet2.cpp">
+    <ClCompile Include="BossAlter.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss00Bullet2.cpp">
+      <Filter>소스 파일\01.Obj\02.Bullet\01.Boss00Bullet\03.Boss00Bullet2</Filter>
     </ClCompile>
     <ClCompile Include="RotBullet.cpp">
       <Filter>소스 파일\01.Obj\02.Bullet\03.Boss02Bullet\RotBullet</Filter>

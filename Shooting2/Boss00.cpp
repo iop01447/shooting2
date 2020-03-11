@@ -211,7 +211,7 @@ void CBoss00::Attack()
 	if (ATTACK == m_eState)
 	{
 		int r = rand() % 3;
-		r = 0;
+		r = 2;
 		switch (r)
 		{
 		case 0:
@@ -341,13 +341,13 @@ void CBoss00::Attack2()
 
 void CBoss00::Attack3()
 {
-	if (m_dwLastAttTime + m_dwAttTime + 1000 < GetTickCount())
+	if (m_dwLastAttTime + m_dwAttTime + 2000 < GetTickCount())
 	{
 		if (m_vOriginPosin[0].y != m_vOriginRazer[0][2].y)
 		{
 			for (int i = 0; i < 2; ++i)
 				for (int j = 2; j < 4; ++j)
-					m_vOriginRazer[i][j].y -= 2.f;
+					m_vOriginRazer[i][j].y -= 1.f;
 			return;
 		}
 		m_dwLastAttTime = GetTickCount();

@@ -247,7 +247,7 @@ void CBoss01::Pattern02()
 {
 	if (m_bFirst)
 	{
-		m_bTransition = true;
+		m_bTransition = false;
 		m_tStatus.iHp = m_tStatus.iMaxHp;
 		m_dwLastPatternChangeTime = GetTickCount();
 
@@ -269,6 +269,13 @@ void CBoss01::Pattern02()
 
 		m_dwLastAttTime = GetTickCount();
 	}
+
+	/*
+	if (!m_bTransition &&
+		CObjMgr::Get_Instance()->Get_List(OBJID::BOSSBULLET)->empty()) {
+		m_bTransition = true;
+	}
+	*/
 
 	if (!m_bTransition &&
 		m_dwLastPatternChangeTime + m_dwPatternTime < GetTickCount()) {

@@ -33,8 +33,8 @@ int CSmallBullet::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_vCenter.x = m_pTarget->Get_Rect().left + 7.f;
-	m_vCenter.y += m_fSpeed + 2.5f;
+	m_vCenter.x = m_pTarget->Get_Rect().left + 14.f;
+	m_vCenter.y += m_fSpeed;
 
 	m_fAngle += m_fSpeed;
 
@@ -44,7 +44,7 @@ int CSmallBullet::Update()
 		m_iRenderIdx = 0;
 
 	m_tInfo.vPos.x = m_vCenter.x + cosf(D3DXToRadian(m_fAngle)) * m_fRotDis;
-	m_tInfo.vPos.y = m_vCenter.y - sinf(D3DXToRadian(m_fAngle)) * (m_fRotDis / 2);
+	m_tInfo.vPos.y = m_vCenter.y - sinf(D3DXToRadian(m_fAngle));
 
 	Update_Rect();
 
