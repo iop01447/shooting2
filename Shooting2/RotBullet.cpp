@@ -20,7 +20,7 @@ void CRotBullet::Initialize()
 
 	m_fRotAngle = 0.f;
 	m_fRotSpeed = 30.f;
-	m_fRotDis = 20.f;
+	m_fRotDis = 10.f;
 
 	Update_Rect();
 
@@ -31,10 +31,10 @@ int CRotBullet::Update()
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	//m_tInfo.vPos += m_fSpeed * m_tInfo.vDir;
 
-//	m_tInfo.vPos += m_fSpeed * m_tInfo.vDir;
-
-	m_tCenter= m_tInfo.vDir * m_fSpeed;
+	m_tCenter.x += m_tInfo.vDir.x * m_fSpeed;
+	m_tCenter.y += m_tInfo.vDir.y * m_fSpeed;
 	
 
 	m_fRotAngle += m_fRotSpeed;
