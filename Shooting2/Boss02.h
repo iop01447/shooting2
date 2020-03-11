@@ -44,5 +44,6 @@ private:
 	int				iPattern;
 	float		m_fAngle2;
 	bool			m_bDir;
+	D3DXVECTOR3		m_vDir;
 };
 
